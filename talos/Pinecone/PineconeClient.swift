@@ -28,14 +28,13 @@ class PineconeClient {
     
     private let apiKey : String
     private let environment : String
-    
-    private var baseUrl : String = ""
+    private var indexOpsBaseUrl : String
     
     
     private init() {
         self.apiKey = ProcessInfo.processInfo.environment["PINECONE_API_KEY"]!
         self.environment = ProcessInfo.processInfo.environment["PINECONE_ENV"]!
-        self.baseUrl = "https://controller.\(self.environment).pinecone.io/databases"
+        self.indexOpsBaseUrl = "https://controller.\(self.environment).pinecone.io/databases"
     }
     
     //---- Create Index Flow ----\\
@@ -84,6 +83,8 @@ class PineconeClient {
         return pineconeRequest
     }
     
+    //---- List Index Flow ----\\
+    
     func listIndexes() {
         
         let pineconeRequest = buildListIndexesRequest()
@@ -125,6 +126,8 @@ class PineconeClient {
         ]
     }
     
+    //---- Delete Index Flow ----\\
+    
     func deleteIndex(indexName: String, completion: @escaping(Result<HTTPURLResponse, Error>) -> Void) {
         
         let request = buildDeleteIndexRequest(indexName: indexName)
@@ -148,7 +151,7 @@ class PineconeClient {
     
     private func buildDeleteIndexRequest(indexName: String) -> URLRequest {
         
-        let urlString = baseUrl + "/\(indexName)"
+        let urlString = indexOpsBaseUrl + "/\(indexName)"
         
         var request = URLRequest(url: URL(string: urlString)!)
         
@@ -160,5 +163,40 @@ class PineconeClient {
         
         return request
     }
+    
+    
+    //----- Vector Operations -----\\
+    
+    
+    struct QueryIndexParameters : Codable {
+        let vector: Embedding
+        let topK : Int
+        let includeMetadata : Bool
+        let namespace : String
+    }
+    
+    struct UpsertIndexParameters : Codable {
+        let vectors : [UpsertRequest]
+        let namespace : String
+    
+    }
+    
+    struct UpsertRequest : Codable {
+        let id : String
+        let values : Embedding
+        let metadata : Data
+    }
+    
+    // you would have to encode before the request ; we dont want this
+    // Try to come up with a better idea after first pass through
+    
+    
+    // Query
+    func query(parameters: QueryIndexParameters) {}
+    
+    
+    // Upsert
+    func upsert(parameters: UpsertIndexParameters) {}
+
     
 }
