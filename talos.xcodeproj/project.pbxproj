@@ -14,6 +14,7 @@
 		2FCA52FE29F0B2F000D619AD /* OpenAIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCA52FD29F0B2F000D619AD /* OpenAIClient.swift */; };
 		2FCA530129F0B6B500D619AD /* Embedding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCA530029F0B6B500D619AD /* Embedding.swift */; };
 		2FCA530329F0D0E000D619AD /* OpenAIEmbeddingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCA530229F0D0E000D619AD /* OpenAIEmbeddingResponse.swift */; };
+		2FCA530729F0DD0800D619AD /* PineconeClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCA530629F0DD0800D619AD /* PineconeClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		2FCA52FD29F0B2F000D619AD /* OpenAIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIClient.swift; sourceTree = "<group>"; };
 		2FCA530029F0B6B500D619AD /* Embedding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Embedding.swift; sourceTree = "<group>"; };
 		2FCA530229F0D0E000D619AD /* OpenAIEmbeddingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIEmbeddingResponse.swift; sourceTree = "<group>"; };
+		2FCA530629F0DD0800D619AD /* PineconeClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PineconeClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 		2FCA52ED29F0B15B00D619AD /* talos */ = {
 			isa = PBXGroup;
 			children = (
+				2FCA530429F0DCE400D619AD /* Pinecone */,
 				2FCA52FF29F0B6A600D619AD /* Models */,
 				2FCA52FC29F0B2D800D619AD /* OpenAI */,
 				2FCA52EE29F0B15B00D619AD /* talosApp.swift */,
@@ -90,6 +93,14 @@
 				2FCA530229F0D0E000D619AD /* OpenAIEmbeddingResponse.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		2FCA530429F0DCE400D619AD /* Pinecone */ = {
+			isa = PBXGroup;
+			children = (
+				2FCA530629F0DD0800D619AD /* PineconeClient.swift */,
+			);
+			path = Pinecone;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -167,6 +178,7 @@
 				2FCA530129F0B6B500D619AD /* Embedding.swift in Sources */,
 				2FCA52EF29F0B15B00D619AD /* talosApp.swift in Sources */,
 				2FCA52FE29F0B2F000D619AD /* OpenAIClient.swift in Sources */,
+				2FCA530729F0DD0800D619AD /* PineconeClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

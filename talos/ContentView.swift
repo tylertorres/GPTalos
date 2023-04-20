@@ -12,10 +12,10 @@ struct ContentView: View {
         VStack {
             Button(
                 action: {
-                    testEmbedding()
+                    testDeleteIndex()
                 },
                 label: {
-                    Text("TEST EMBEDDING FUNC")
+                    Text("TEST FUNC")
                         .fontWeight(.heavy)
                         .foregroundColor(.white)
                         .padding()
@@ -34,7 +34,43 @@ struct ContentView: View {
         let input : String = "Hello world embedding"
         
         client.generateEmbeddings(for: input)
+    }
+    
+    func testListIndexPinecone() {
+        let client = PineconeClient.shared
         
+        client.listIndexes()
+    }
+    
+    func testCreateIndex() {
+        let pinecone = PineconeClient.shared
+        let parameters = CreateIndexParameters(name: "talos-index-2", dimension: 1536, metric: "cosine", pods: 1, replicas: 1, pod_type: "p1.x1")
+        
+        pinecone.createIndex(parameters: parameters) { result in
+            
+            switch result {
+            case .success(let httpResponse):
+                print(httpResponse)
+
+            case .failure(let error):
+                print(error)
+            }
+            
+        }
+    }
+    
+    func testDeleteIndex() {
+        let client = PineconeClient.shared
+        
+        client.deleteIndex(indexName: "talos-index-3") { result in
+            
+            switch result {
+            case .success(let response):
+                print(response)
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 }
 
