@@ -42,7 +42,7 @@ class OpenAIClient {
         let jsonPostData = try! JSONSerialization.data(withJSONObject: jsonBody)
         embeddingsRequest.httpBody = jsonPostData
         
-        URLSession.shared.dataTask(with: embeddingsRequest) { [weak self] data, response, error in
+        URLSession.shared.dataTask(with: embeddingsRequest) { data, response, error in
             
             guard let data = data else {
                 print(error?.localizedDescription ?? "No data returned")

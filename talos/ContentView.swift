@@ -164,3 +164,6 @@ struct ContentView_Previews: PreviewProvider {
 // TODO: Refactor PineconeClient to encapsulate all config related properties upon initialization
 // TODO: Figure out metadata generic dictionary issue
 
+
+// Notes: comparing vector values and extracting metadata from that ,such as tasks, text, etc
+

@@ -118,18 +118,16 @@ class PineconeClient {
         let urlString = "https://controller.\(self.environment).pinecone.io/databases"
 
         var pineconeRequest = URLRequest(url: URL(string: urlString)!)
-        pineconeRequest.allHTTPHeaderFields = buildPineconeHeaders()
         pineconeRequest.httpMethod = "GET"
+        pineconeRequest.allHTTPHeaderFields = [
+            "Api-Key": apiKey,
+            "Accept": "application/json; charset=utf-8"
+        ]
         
         return pineconeRequest
     }
     
-    private func buildPineconeHeaders() -> [String : String] {
-        return [
-            "Api-Key": apiKey,
-            "accept": "application/json; charset=utf-8"
-        ]
-    }
+
     
     //---- Delete Index Flow ----\\
     
@@ -205,11 +203,6 @@ class PineconeClient {
                completion: @escaping(Result<PineconeQueryResponse, Error>) -> Void
      ) {
         
-        // Generate query embeddings
-            // Take in input and send to openai to generate embeddings
-            // store query embeddings
-        // Send pinecone query request
-        
         let queryUrl = "https://\(indexName)-\(projectId).svc.\(environment).pinecone.io"
         
         let endpointUrl = URL(string: queryUrl)?.appendingPathComponent("/query")
@@ -231,7 +224,9 @@ class PineconeClient {
         }
         
         URLSession.shared.dataTask(with: queryRequest) { data, response, error in
-            guard let data = data else { return completion(.failure("No data found" as! Error))}
+            guard let data = data else {
+                return completion(.failure("No data found" as! Error))
+            }
             
             let decoder = JSONDecoder()
             
@@ -240,37 +235,11 @@ class PineconeClient {
                 completion(.success(decoded))
             } catch {
                 completion(.failure(error))
+                
             }
-            
-            
-            
-            
-            
+
         }.resume()
-        
-        
-        
-        
-        // comparing vector values and extracting metadata from that ,such as tasks, text, etc
-    
-        
-        
-        
-        
-        
-        
-        
     }
-    
-    private func buildQueryUrl(indexName: String) -> URL {
-        
-        let baseVectorOpsUrl = "https://\(indexName)-\(projectId).svc.\(environment).pinecone.io"
-        
-        let endpointUrl = URL(string: baseVectorOpsUrl)!.appendingPathComponent("/vectors/upsert")
-        
-        return endpointUrl
-    }
-    
     
     // Upsert
     func upsert(id : String,
@@ -280,7 +249,7 @@ class PineconeClient {
                 index: String,
                 completion: @escaping(Result<PineconeUpsertResponse, Error>) -> Void) { //TODO: Change later to not take in index
         
-        var vectorToInsert = UpsertRequest(id: id, values: vector, metadata: metadata)
+        let vectorToInsert = UpsertRequest(id: id, values: vector, metadata: metadata)
         
         var upsertRequest = buildUpsertRequest(index: index)
         
