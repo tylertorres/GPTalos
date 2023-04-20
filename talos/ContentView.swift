@@ -10,14 +10,35 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            Button(
+                action: {
+                    testEmbedding()
+                },
+                label: {
+                    Text("TEST EMBEDDING FUNC")
+                        .fontWeight(.heavy)
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Color.blue)
+                        .cornerRadius(15)
+            })
         }
         .padding()
     }
+    
+    
+    
+    
+    func testEmbedding() {
+        let client = OpenAIClient.shared
+        let input : String = "Hello world embedding"
+        
+        client.generateEmbeddings(for: input)
+        
+    }
 }
+
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
