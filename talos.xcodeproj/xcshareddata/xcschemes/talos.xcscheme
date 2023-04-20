@@ -56,6 +56,11 @@
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
+            key = "PINECONE_PROJECT_ID"
+            value = "49e7acd"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
             key = "PINECONE_ENV"
             value = "us-west4-gcp"
             isEnabled = "YES">

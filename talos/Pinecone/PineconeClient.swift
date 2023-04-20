@@ -10,6 +10,7 @@ import Foundation
 enum PineconeError: Error {
     case invalidURL
     case unexpectedResponse
+    case jsonSerializationError(Error)
 }
 
 struct CreateIndexParameters : Codable {
@@ -29,12 +30,16 @@ class PineconeClient {
     private let apiKey : String
     private let environment : String
     private var indexOpsBaseUrl : String
+    private let projectId : String
     
     
     private init() {
         self.apiKey = ProcessInfo.processInfo.environment["PINECONE_API_KEY"]!
         self.environment = ProcessInfo.processInfo.environment["PINECONE_ENV"]!
+        self.projectId = ProcessInfo.processInfo.environment["PINECONE_PROJECT_ID"]!
+        
         self.indexOpsBaseUrl = "https://controller.\(self.environment).pinecone.io/databases"
+        
     }
     
     //---- Create Index Flow ----\\
@@ -184,19 +189,151 @@ class PineconeClient {
     struct UpsertRequest : Codable {
         let id : String
         let values : Embedding
-        let metadata : Data
+        let metadata: [String : String]
     }
     
     // you would have to encode before the request ; we dont want this
-    // Try to come up with a better idea after first pass through
+    // TODO: Try to come up with a better idea after first pass through
     
     
     // Query
-    func query(parameters: QueryIndexParameters) {}
+    func query(vector: Embedding,
+               topK: Int,
+               includeMetadata: Bool,
+               namespace: String,
+               indexName: String,
+               completion: @escaping(Result<PineconeQueryResponse, Error>) -> Void
+     ) {
+        
+        // Generate query embeddings
+            // Take in input and send to openai to generate embeddings
+            // store query embeddings
+        // Send pinecone query request
+        
+        let queryUrl = "https://\(indexName)-\(projectId).svc.\(environment).pinecone.io"
+        
+        let endpointUrl = URL(string: queryUrl)?.appendingPathComponent("/query")
+
+        var queryRequest = URLRequest(url: endpointUrl!)
+        queryRequest.httpMethod = "POST"
+        queryRequest.allHTTPHeaderFields = [
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Api-Key": apiKey
+        ]
+        
+        let parameters = QueryIndexParameters(vector: vector, topK: topK, includeMetadata: includeMetadata, namespace: namespace)
+        
+        do {
+            queryRequest.httpBody = try JSONEncoder().encode(parameters)
+        } catch {
+            print(error)
+        }
+        
+        URLSession.shared.dataTask(with: queryRequest) { data, response, error in
+            guard let data = data else { return completion(.failure("No data found" as! Error))}
+            
+            let decoder = JSONDecoder()
+            
+            do {
+                let decoded = try decoder.decode(PineconeQueryResponse.self, from: data)
+                completion(.success(decoded))
+            } catch {
+                completion(.failure(error))
+            }
+            
+            
+            
+            
+            
+        }.resume()
+        
+        
+        
+        
+        // comparing vector values and extracting metadata from that ,such as tasks, text, etc
+    
+        
+        
+        
+        
+        
+        
+        
+    }
+    
+    private func buildQueryUrl(indexName: String) -> URL {
+        
+        let baseVectorOpsUrl = "https://\(indexName)-\(projectId).svc.\(environment).pinecone.io"
+        
+        let endpointUrl = URL(string: baseVectorOpsUrl)!.appendingPathComponent("/vectors/upsert")
+        
+        return endpointUrl
+    }
     
     
     // Upsert
-    func upsert(parameters: UpsertIndexParameters) {}
-
+    func upsert(id : String,
+                vector: Embedding,
+                metadata: [String : String] = [:],
+                namespace: String,
+                index: String,
+                completion: @escaping(Result<PineconeUpsertResponse, Error>) -> Void) { //TODO: Change later to not take in index
+        
+        var vectorToInsert = UpsertRequest(id: id, values: vector, metadata: metadata)
+        
+        var upsertRequest = buildUpsertRequest(index: index)
+        
+        let bodyParams = UpsertIndexParameters(vectors: [vectorToInsert], namespace: namespace)
+        
+        do {
+            upsertRequest.httpBody = try JSONEncoder().encode(bodyParams) // Encoder used to turn dicts into json for body params
+        } catch {
+            completion(.failure(PineconeError.jsonSerializationError(error)))
+        }
+        
+        URLSession.shared.dataTask(with: upsertRequest) { data, response, error in
+            guard let data = data else {
+                print("Error occurred with request")
+                return
+            }
+            
+            do {
+                let upsertResponse = try JSONDecoder().decode(PineconeUpsertResponse.self, from: data)
+                completion(.success(upsertResponse))
+            } catch {
+                completion(.failure(PineconeError.jsonSerializationError(error)))
+            }
+            
+        }.resume()
+        
+    }
     
+    private func buildUpsertRequest(index: String) -> URLRequest {
+        
+        let url = buildVectorOpsUrl(indexName: index)
+        
+        var request = URLRequest(url: url)
+        
+        request.httpMethod = "POST"
+        request.allHTTPHeaderFields = [
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Api-Key": apiKey
+        ]
+        
+        return request
+    }
+    
+    private func buildVectorOpsUrl(indexName: String) -> URL {
+        
+        let baseVectorOpsUrl = "https://\(indexName)-\(projectId).svc.\(environment).pinecone.io"
+        
+        let endpointUrl = URL(string: baseVectorOpsUrl)!.appendingPathComponent("/vectors/upsert")
+        
+        return endpointUrl
+    }
+    
+    //TODO:  Create an underlying Index Object so you dont have to keep passing in Index Name ( encapsulation )
+    	
 }

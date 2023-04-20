@@ -29,7 +29,7 @@ class OpenAIClient {
     private let embeddingsModel : String = "text-embedding-ada-002"
     
     
-    func generateEmbeddings(for input: String) {
+    func generateEmbeddings(for input: String, completion: @escaping (Result<OpenAIEmbeddingResponse, Error>) -> Void) {
         
         var embeddingsRequest = createDefaultEmbeddingsRequest()
         
@@ -42,7 +42,7 @@ class OpenAIClient {
         let jsonPostData = try! JSONSerialization.data(withJSONObject: jsonBody)
         embeddingsRequest.httpBody = jsonPostData
         
-        URLSession.shared.dataTask(with: embeddingsRequest) { data, response, error in
+        URLSession.shared.dataTask(with: embeddingsRequest) { [weak self] data, response, error in
             
             guard let data = data else {
                 print(error?.localizedDescription ?? "No data returned")
@@ -51,8 +51,7 @@ class OpenAIClient {
             
             do {
                 let embeddingResponse = try JSONDecoder().decode(OpenAIEmbeddingResponse.self, from: data)
-                print(embeddingResponse)
-                
+                completion(.success(embeddingResponse))
             } catch {
                 print(error)
             }
