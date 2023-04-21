@@ -19,6 +19,8 @@
 		2FCA530D29F1E84A00D619AD /* PineconeUpsertResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCA530C29F1E84A00D619AD /* PineconeUpsertResponse.swift */; };
 		2FCA531029F1EED300D619AD /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCA530F29F1EED300D619AD /* Queue.swift */; };
 		2FCA531229F2056400D619AD /* TaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCA531129F2056400D619AD /* TaskManager.swift */; };
+		2FE04C7F29F2649200445B8A /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE04C7E29F2649200445B8A /* Task.swift */; };
+		2FE04C8229F274DC00445B8A /* OpenAIChatCompletionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE04C8129F274DC00445B8A /* OpenAIChatCompletionResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +37,8 @@
 		2FCA530C29F1E84A00D619AD /* PineconeUpsertResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PineconeUpsertResponse.swift; sourceTree = "<group>"; };
 		2FCA530F29F1EED300D619AD /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		2FCA531129F2056400D619AD /* TaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskManager.swift; sourceTree = "<group>"; };
+		2FE04C7E29F2649200445B8A /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		2FE04C8129F274DC00445B8A /* OpenAIChatCompletionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIChatCompletionResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +95,7 @@
 		2FCA52FC29F0B2D800D619AD /* OpenAI */ = {
 			isa = PBXGroup;
 			children = (
+				2FE04C8029F274BF00445B8A /* Models */,
 				2FCA52FD29F0B2F000D619AD /* OpenAIClient.swift */,
 			);
 			path = OpenAI;
@@ -99,9 +104,8 @@
 		2FCA52FF29F0B6A600D619AD /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				2FCA530A29F1E7DF00D619AD /* Pi cone */,
 				2FCA530029F0B6B500D619AD /* Embedding.swift */,
-				2FCA530229F0D0E000D619AD /* OpenAIEmbeddingResponse.swift */,
+				2FE04C7E29F2649200445B8A /* Task.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -113,13 +117,6 @@
 				2FCA530629F0DD0800D619AD /* PineconeClient.swift */,
 			);
 			path = Pinecone;
-			sourceTree = "<group>";
-		};
-		2FCA530A29F1E7DF00D619AD /* Pi cone */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Pi cone";
 			sourceTree = "<group>";
 		};
 		2FCA530B29F1E83000D619AD /* Models */ = {
@@ -137,6 +134,15 @@
 				2FCA530F29F1EED300D619AD /* Queue.swift */,
 			);
 			path = SimpleDataStructures;
+			sourceTree = "<group>";
+		};
+		2FE04C8029F274BF00445B8A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2FCA530229F0D0E000D619AD /* OpenAIEmbeddingResponse.swift */,
+				2FE04C8129F274DC00445B8A /* OpenAIChatCompletionResponse.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -213,7 +219,9 @@
 				2FCA530329F0D0E000D619AD /* OpenAIEmbeddingResponse.swift in Sources */,
 				2FCA531229F2056400D619AD /* TaskManager.swift in Sources */,
 				2FCA530D29F1E84A00D619AD /* PineconeUpsertResponse.swift in Sources */,
+				2FE04C7F29F2649200445B8A /* Task.swift in Sources */,
 				2FCA530929F1DDE200D619AD /* PineconeQueryResponse.swift in Sources */,
+				2FE04C8229F274DC00445B8A /* OpenAIChatCompletionResponse.swift in Sources */,
 				2FCA530129F0B6B500D619AD /* Embedding.swift in Sources */,
 				2FCA52EF29F0B15B00D619AD /* talosApp.swift in Sources */,
 				2FCA52FE29F0B2F000D619AD /* OpenAIClient.swift in Sources */,

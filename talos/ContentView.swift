@@ -12,7 +12,7 @@ struct ContentView: View {
         VStack {
             Button(
                 action: {
-                    testGenEmbeddingAndUpsert()
+                    testTaskManager()
                 },
                 label: {
                     Text("TEST FUNC")
@@ -36,6 +36,12 @@ struct ContentView: View {
 //        client.generateEmbeddings(for: input)
 //    }
 //
+    
+    func testTaskManager() {
+        let taskManager = TaskManager()
+        taskManager.run(objective: "Write a weather report for SF", initialTask: "Develop a task list")
+    }
+    
     func testListIndexPinecone() {
         let client = PineconeClient.shared
         

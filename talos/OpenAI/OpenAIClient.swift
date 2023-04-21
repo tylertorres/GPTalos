@@ -29,7 +29,8 @@ class OpenAIClient {
     private let embeddingsModel : String = "text-embedding-ada-002"
     
     
-    func generateEmbeddings(for input: String, completion: @escaping (Result<OpenAIEmbeddingResponse, Error>) -> Void) {
+    func generateEmbeddings(for input: String,
+                            completion: @escaping (Result<OpenAIEmbeddingResponse, Error>) -> Void) {
         
         var embeddingsRequest = createDefaultEmbeddingsRequest()
         
@@ -53,13 +54,12 @@ class OpenAIClient {
                 let embeddingResponse = try JSONDecoder().decode(OpenAIEmbeddingResponse.self, from: data)
                 completion(.success(embeddingResponse))
             } catch {
-                print(error)
+                completion(.failure(error))
             }
         
         }.resume()
         
     }
-    
     
     
     private func createDefaultEmbeddingsRequest() -> URLRequest {
@@ -72,6 +72,53 @@ class OpenAIClient {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         return request
+    }
+    
+    func createCompletion() {}
+    
+    
+    struct CreateChatCompletionParams : Codable {
+        let model : String
+        let messages : [[String : String]]
+    }
+    
+    func createChatCompletion(model: String? = "gpt-3.5-turbo",
+                              prompt: String,
+                              temperature: Float
+    ) {
+        
+        let urlString = baseUrl + version + chatCompletionsEndpoint
+        let url = URL(string: urlString)
+        
+        var chatCompletionRequest = URLRequest(url: url!)
+        chatCompletionRequest.allHTTPHeaderFields = [
+            "Content-Type": "application/json",
+            "Authorization": "Bearer \(apiKey)"
+        ]
+        chatCompletionRequest.httpMethod = "POST"
+            
+        let messages = [["role": "system", "content": prompt]]
+        let parameters = CreateChatCompletionParams(model: model!, messages: messages)
+        
+        do {
+            let encodedParams = try JSONEncoder().encode(parameters)
+            chatCompletionRequest.httpBody = encodedParams
+        } catch {
+            print(error)
+        }
+        
+        URLSession.shared.dataTask(with: chatCompletionRequest) { data, res, error in
+            guard let data = data else { return }
+            
+            do {
+                let decoded = try JSONDecoder().decode(OpenAIChatCompletionResponse.self, from: data)
+                print(decoded)
+            } catch {
+                print(error)
+            }
+            
+        }.resume()
+        
     }
     
 }

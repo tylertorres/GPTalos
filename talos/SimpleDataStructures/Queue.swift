@@ -11,7 +11,7 @@ import Foundation
 
 class Queue<T> {
     
-    private var queue: [T] = []
+    var queue: [T] = []
     
     var isEmpty: Bool {
         return queue.isEmpty
