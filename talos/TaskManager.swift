@@ -13,84 +13,92 @@ class TaskManager {
     private let openAIClient : OpenAIClient
     private let pineconeClient: PineconeClient
     
-    private let taskList : Queue<Task>
+    private let taskList : Queue<LLMTask>
     
     private var contextEmbeddings : Embedding = []
     
     init() {
         self.openAIClient = OpenAIClient.shared
         self.pineconeClient = PineconeClient.shared
-        self.taskList = Queue<Task>()
+        self.taskList = Queue<LLMTask>()
     }
     
-    
-    func run(objective: String, initialTask : String) {
+    func runExecutionAgent(context: [LLMTask] = [],
+                           objective: String,
+                           currentTask: LLMTask) async -> String {
+        let prompt =
+                    """
+                        You are an AI who performs one task based on the following objective: \(objective)\n.
+                        Take into account these previously completed tasks: \(context)\n.
+                        Your task: \(currentTask.name)\n
+                        Response:
+                    """
         
-        print("**************** Adding first task to list... ****************")
-        taskList.enqueue(Task(id: UUID().uuidString, name: initialTask))
+        var result : String = "TEST"
         
-        
-        while !taskList.isEmpty {
-            print("\n******** TASK LIST ********\n")
-            
-            for task in taskList.queue {
-                print("- \(task.name)")
-            }
-            
-            print("\n**************** UPCOMING TASK ****************\n")
-            let task = taskList.dequeue()!
-            print(task.name)
-            
-            
-            // Execution Agent
-            let result = runExecutionAgent(task: task, objective: objective)
-            print("\n**************** TASK RESULT ****************\n")
-
-                        
+        do {
+            result = try await openAIClient.createChatCompletion(prompt: prompt, temperature: 0.5)
+        } catch {
+            print(error)
         }
         
+        return result
+    
     }
     
-    private func runExecutionAgent(task: Task, objective: String) -> String {
+    func runContextAgent(query: String,
+                         n: Int = 5) async -> Embedding {
         
-        let context = runContextAgent(query: objective)
+        var embeddings : Embedding = []
         
-//        let prompt =
-//                    """
-//                        You are an AI who performs one task based on the following objective: \(objective)\n.
-//                        Take into account these previously completed tasks: \(context)\n.
-//                        Your task: \(task.name)\n
-//                        Response:
-//                    """
-//
-//        var result = openAIClient.createChatCompletion(prompt: prompt, temperature: 0.7)
-    
+        do {
+            embeddings = try await openAIClient.generateEmbeddings(for: query)
+        } catch {
+            print(error)
+        }
         
-        return ""
+        return embeddings
     }
     
-    private func runContextAgent(query: String, n: Int = 5) {
+    func upsertEnrichedTask(result: String, namespace: String, task: LLMTask) async {
         
-        getQueryEmbedding(query: query)
+        let resultId = "result_\(task.id)"
+        var resultEmbeddings : Embedding = []
         
+        do {
+            resultEmbeddings = try await openAIClient.generateEmbeddings(for: result)
+        } catch {
+            print("Error occured when trying to generate embedings for result")
+            return
+        }
         
-        
-        
-    }
-    
-    private func getQueryEmbedding(query: String) {
-        
-        openAIClient.generateEmbeddings(for: query) { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case .success(let response):
-                self.contextEmbeddings = response.data.first!.embedding
-            case .failure(let error):
-                print("Error occurredd: \(error)")
-            }
+        do {
+            let upsert = try await pineconeClient.upsert(id: resultId,
+                                                         vector: resultEmbeddings,
+                                                         metadata: ["task": task.name, "result": result],
+                                                         namespace: namespace,
+                                                         index: "talos-index-1")
+            print("Upsert Successful : \(upsert)")
+        } catch {
+            print(error)
         }
     }
     
+    func query(namespace: String) async {
+        
+        do {
+            let queryVector = try await openAIClient.generateEmbeddings(for: "What are some tasks I have completed?")
+            
+            let response = try await pineconeClient.query(vector: queryVector,
+                                                topK: 3,
+                                                includeMetadata: true,
+                                                namespace: namespace,
+                                                indexName: "talos-index-1")
+            print(response)
+        } catch {
+            print(error)
+        }
+        
+    }
 
 }

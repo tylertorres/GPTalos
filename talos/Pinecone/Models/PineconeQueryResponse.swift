@@ -17,15 +17,15 @@ struct Match: Codable {
     let score: Double
     let values: [Double]
     let sparseValues: SparseValues?
-    let metadata: Metadata?
+    let metadata: [String : AnyCodable]?
+    
+    private enum CodingKeys: String, CodingKey {
+        case id, score, values, sparseValues, metadata
+    }
+
 }
 
 struct SparseValues: Codable {
     let indices: [Int]
     let values: [Double]
-}
-
-struct Metadata: Codable {
-    let genre: String
-    let year: Int
 }

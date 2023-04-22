@@ -12,7 +12,6 @@ struct ContentView: View {
         VStack {
             Button(
                 action: {
-                    testTaskManager()
                 },
                 label: {
                     Text("TEST FUNC")
@@ -23,23 +22,29 @@ struct ContentView: View {
                         .cornerRadius(15)
             })
         }
+        .task {
+//            let tm = TaskManager()
+//
+//            let currentTask : LLMTask = LLMTask(id: UUID().uuidString, name: "Develop a task list")
+//
+//            let embedding = await tm.runContextAgent(query: "Who is who?")
+//            print(embedding)
+//            print()
+//
+//            let result = await tm.runExecutionAgent(objective: "Write a weather report for New York City", currentTask: currentTask)
+//
+//            await tm.upsertEnrichedTask(result: result, namespace: "test", task: currentTask)
+            await testFunc()
+        }
         .padding()
     }
     
     
     
-    
-//    func testEmbedding() {
-//        let client = OpenAIClient.shared
-//        let input : String = "Hello world embedding"
-//
-//        client.generateEmbeddings(for: input)
-//    }
-//
-    
-    func testTaskManager() {
-        let taskManager = TaskManager()
-        taskManager.run(objective: "Write a weather report for SF", initialTask: "Develop a task list")
+    func testFunc() async {
+        let tm = TaskManager()
+        
+        await tm.query(namespace: "test")
     }
     
     func testListIndexPinecone() {
@@ -83,28 +88,28 @@ struct ContentView: View {
         let openAIClient = OpenAIClient.shared
         let pineconeClient = PineconeClient.shared
         
-        openAIClient.generateEmbeddings(for: "RetrievalQA differs from ConversationalQA as the latter allows for chat history.") { res in
-            
-            switch res {
-                case .success(let response):
-                
-                let embedding = response.data.first?.embedding
-                    
-                pineconeClient.upsert(id: UUID().uuidString, vector: embedding!, namespace: "test", index: "talos-index-1") { result in
-                    switch result {
-                    case .success(let dict):
-                        print(dict.upsertedCount)
-                    case.failure(let error):
-                        print("ERROR occurred on upsert : \(error)")
-                    }
-                }
-                
-                
-                case .failure(let error):
-                    print(error)
-            }
-            
-        }
+//        openAIClient.generateEmbeddings(for: "RetrievalQA differs from ConversationalQA as the latter allows for chat history.") { res in
+//
+//            switch res {
+//                case .success(let response):
+//
+//                let embedding = response.data.first?.embedding
+//
+//                pineconeClient.upsert(id: UUID().uuidString, vector: embedding!, namespace: "test", index: "talos-index-1") { result in
+//                    switch result {
+//                    case .success(let dict):
+//                        print(dict.upsertedCount)
+//                    case.failure(let error):
+//                        print("ERROR occurred on upsert : \(error)")
+//                    }
+//                }
+//
+//
+//                case .failure(let error):
+//                    print(error)
+//            }
+//
+//        }
     }
     
     private func generateEmbedding() -> Embedding {
@@ -112,16 +117,16 @@ struct ContentView: View {
         
         var embeddings : Embedding = []
         
-        openAIClient.generateEmbeddings(for: "RetrievalQA differs from ConversationalQA as the latter allows for chat history.") { res in
-            
-            switch res {
-            case .success(let response):
-                print(response.data.first!.embedding)
-                embeddings = response.data.first!.embedding
-            case .failure(let error):
-                print(error)
-            }
-        }
+//        openAIClient.generateEmbeddings(for: "RetrievalQA differs from ConversationalQA as the latter allows for chat history.") { res in
+//
+//            switch res {
+//            case .success(let response):
+//                print(response.data.first!.embedding)
+//                embeddings = response.data.first!.embedding
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
         
         return embeddings
             
@@ -131,28 +136,28 @@ struct ContentView: View {
         let pineconeClient = PineconeClient.shared
         let openAIClient = OpenAIClient.shared
         
-        openAIClient.generateEmbeddings(for: "What is different about RetrievalQA than ConversationalQA?") { res in
-            
-            switch res {
-            case .success(let response):
-                
-                let embeddings = response.data.first!.embedding
-                
-                pineconeClient.query(
-                    vector: embeddings, topK: 5, includeMetadata: true, namespace: "test", indexName: "talos-index-1"
-                ) { result in
-                    switch result {
-                    case .success(let response):
-                        print(response)
-                    case .failure(let error):
-                        print(error)
-                    }
-                }
-                
-            case .failure(let error):
-                print(error)
-            }
-        }
+//        openAIClient.generateEmbeddings(for: "What is different about RetrievalQA than ConversationalQA?") { res in
+//
+//            switch res {
+//            case .success(let response):
+//
+//                let embeddings = response.data.first!.embedding
+//
+//                pineconeClient.query(
+//                    vector: embeddings, topK: 5, includeMetadata: true, namespace: "test", indexName: "talos-index-1"
+//                ) { result in
+//                    switch result {
+//                    case .success(let response):
+//                        print(response)
+//                    case .failure(let error):
+//                        print(error)
+//                    }
+//                }
+//
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
 
     }
 }
@@ -171,5 +176,7 @@ struct ContentView_Previews: PreviewProvider {
 // TODO: Figure out metadata generic dictionary issue
 
 
-// Notes: comparing vector values and extracting metadata from that ,such as tasks, text, etc
+// Notes:
+// - comparing vector values and extracting metadata from that ,such as tasks, text, etc
+
 

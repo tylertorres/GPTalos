@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct Task : Codable {
+struct LLMTask : Codable {
     let id : String
     let name : String
     var data : [String : String] = [:]

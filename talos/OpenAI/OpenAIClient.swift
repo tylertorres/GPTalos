@@ -29,8 +29,7 @@ class OpenAIClient {
     private let embeddingsModel : String = "text-embedding-ada-002"
     
     
-    func generateEmbeddings(for input: String,
-                            completion: @escaping (Result<OpenAIEmbeddingResponse, Error>) -> Void) {
+    func generateEmbeddings(for input: String) async throws -> Embedding {
         
         var embeddingsRequest = createDefaultEmbeddingsRequest()
         
@@ -42,23 +41,14 @@ class OpenAIClient {
         
         let jsonPostData = try! JSONSerialization.data(withJSONObject: jsonBody)
         embeddingsRequest.httpBody = jsonPostData
+
+        let (data, _) = try await URLSession.shared.data(for: embeddingsRequest)
         
-        URLSession.shared.dataTask(with: embeddingsRequest) { data, response, error in
-            
-            guard let data = data else {
-                print(error?.localizedDescription ?? "No data returned")
-                return
-            }
-            
-            do {
-                let embeddingResponse = try JSONDecoder().decode(OpenAIEmbeddingResponse.self, from: data)
-                completion(.success(embeddingResponse))
-            } catch {
-                completion(.failure(error))
-            }
+        let embeddingResponse = try JSONDecoder().decode(OpenAIEmbeddingResponse.self, from: data)
         
-        }.resume()
+        guard let embedding = embeddingResponse.data.first?.embedding else { return [] }
         
+        return embedding
     }
     
     
@@ -84,8 +74,7 @@ class OpenAIClient {
     
     func createChatCompletion(model: String? = "gpt-3.5-turbo",
                               prompt: String,
-                              temperature: Float
-    ) {
+                              temperature: Float) async throws -> String {
         
         let urlString = baseUrl + version + chatCompletionsEndpoint
         let url = URL(string: urlString)
@@ -101,24 +90,18 @@ class OpenAIClient {
         let parameters = CreateChatCompletionParams(model: model!, messages: messages)
         
         do {
-            let encodedParams = try JSONEncoder().encode(parameters)
-            chatCompletionRequest.httpBody = encodedParams
+            chatCompletionRequest.httpBody = try JSONEncoder().encode(parameters)
         } catch {
             print(error)
         }
         
-        URLSession.shared.dataTask(with: chatCompletionRequest) { data, res, error in
-            guard let data = data else { return }
-            
-            do {
-                let decoded = try JSONDecoder().decode(OpenAIChatCompletionResponse.self, from: data)
-                print(decoded)
-            } catch {
-                print(error)
-            }
-            
-        }.resume()
+        let (data, _ ) = try await URLSession.shared.data(for: chatCompletionRequest)
+
+        let completionResponse = try JSONDecoder().decode(OpenAIChatCompletionResponse.self, from: data)
         
+        let result = completionResponse.choices.first?.message.content
+        
+        return result ?? ""
     }
     
 }

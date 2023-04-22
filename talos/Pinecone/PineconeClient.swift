@@ -199,9 +199,7 @@ class PineconeClient {
                topK: Int,
                includeMetadata: Bool,
                namespace: String,
-               indexName: String,
-               completion: @escaping(Result<PineconeQueryResponse, Error>) -> Void
-     ) {
+               indexName: String) async throws -> PineconeQueryResponse {
         
         let queryUrl = "https://\(indexName)-\(projectId).svc.\(environment).pinecone.io"
         
@@ -223,22 +221,11 @@ class PineconeClient {
             print(error)
         }
         
-        URLSession.shared.dataTask(with: queryRequest) { data, response, error in
-            guard let data = data else {
-                return completion(.failure("No data found" as! Error))
-            }
-            
-            let decoder = JSONDecoder()
-            
-            do {
-                let decoded = try decoder.decode(PineconeQueryResponse.self, from: data)
-                completion(.success(decoded))
-            } catch {
-                completion(.failure(error))
-                
-            }
-
-        }.resume()
+        let (data, _) = try await URLSession.shared.data(for: queryRequest)
+        
+        let response = try JSONDecoder().decode(PineconeQueryResponse.self, from: data)
+        
+        return response
     }
     
     // Upsert
@@ -246,8 +233,7 @@ class PineconeClient {
                 vector: Embedding,
                 metadata: [String : String] = [:],
                 namespace: String,
-                index: String,
-                completion: @escaping(Result<PineconeUpsertResponse, Error>) -> Void) { //TODO: Change later to not take in index
+                index: String) async throws -> Bool {
         
         let vectorToInsert = UpsertRequest(id: id, values: vector, metadata: metadata)
         
@@ -255,27 +241,13 @@ class PineconeClient {
         
         let bodyParams = UpsertIndexParameters(vectors: [vectorToInsert], namespace: namespace)
         
-        do {
-            upsertRequest.httpBody = try JSONEncoder().encode(bodyParams) // Encoder used to turn dicts into json for body params
-        } catch {
-            completion(.failure(PineconeError.jsonSerializationError(error)))
-        }
+        upsertRequest.httpBody = try JSONEncoder().encode(bodyParams) // Encoder used to turn dicts into json for body params
         
-        URLSession.shared.dataTask(with: upsertRequest) { data, response, error in
-            guard let data = data else {
-                print("Error occurred with request")
-                return
-            }
-            
-            do {
-                let upsertResponse = try JSONDecoder().decode(PineconeUpsertResponse.self, from: data)
-                completion(.success(upsertResponse))
-            } catch {
-                completion(.failure(PineconeError.jsonSerializationError(error)))
-            }
-            
-        }.resume()
+        let (data, _) = try await URLSession.shared.data(for: upsertRequest)
+
+        let upsertResponse = try JSONDecoder().decode(PineconeUpsertResponse.self, from: data)
         
+        return upsertResponse.upsertedCount > 0
     }
     
     private func buildUpsertRequest(index: String) -> URLRequest {
