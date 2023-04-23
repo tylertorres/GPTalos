@@ -187,11 +187,8 @@ class PineconeClient {
     struct UpsertRequest : Codable {
         let id : String
         let values : Embedding
-        let metadata: [String : String]
+        let metadata: [String : AnyCodable]
     }
-    
-    // you would have to encode before the request ; we dont want this
-    // TODO: Try to come up with a better idea after first pass through
     
     
     // Query

@@ -90,11 +90,13 @@ class TaskManager {
             let queryVector = try await openAIClient.generateEmbeddings(for: "What are some tasks I have completed?")
             
             let response = try await pineconeClient.query(vector: queryVector,
-                                                topK: 3,
+                                                topK: 5,
                                                 includeMetadata: true,
                                                 namespace: namespace,
                                                 indexName: "talos-index-1")
-            print(response)
+            
+            
+            
         } catch {
             print(error)
         }
