@@ -60,29 +60,29 @@ class TaskManager {
         return embeddings
     }
     
-    func upsertEnrichedTask(result: String, namespace: String, task: LLMTask) async {
-        
-        let resultId = "result_\(task.id)"
-        var resultEmbeddings : Embedding = []
-        
-        do {
-            resultEmbeddings = try await openAIClient.generateEmbeddings(for: result)
-        } catch {
-            print("Error occured when trying to generate embedings for result")
-            return
-        }
-        
-        do {
-            let upsert = try await pineconeClient.upsert(id: resultId,
-                                                         vector: resultEmbeddings,
-                                                         metadata: ["task": task.name, "result": result],
-                                                         namespace: namespace,
-                                                         index: "talos-index-1")
-            print("Upsert Successful : \(upsert)")
-        } catch {
-            print(error)
-        }
-    }
+//    func upsertEnrichedTask(result: String, namespace: String, task: LLMTask) async {
+//        
+//        let resultId = "result_\(task.id)"
+//        var resultEmbeddings : Embedding = []
+//        
+//        do {
+//            resultEmbeddings = try await openAIClient.generateEmbeddings(for: result)
+//        } catch {
+//            print("Error occured when trying to generate embedings for result")
+//            return
+//        }
+//        
+//        do {
+//            let upsert = try await pineconeClient.upsert(id: resultId,
+//                                                         vector: resultEmbeddings,
+//                                                         metadata: ["task": task.name, "result": result],
+//                                                         namespace: namespace,
+//                                                         index: "talos-index-1")
+//            print("Upsert Successful : \(upsert)")
+//        } catch {
+//            print(error)
+//        }
+//    }
     
     func query(namespace: String) async {
         

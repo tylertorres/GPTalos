@@ -228,7 +228,7 @@ class PineconeClient {
     // Upsert
     func upsert(id : String,
                 vector: Embedding,
-                metadata: [String : String] = [:],
+                metadata: [String : AnyCodable] = [:],
                 namespace: String,
                 index: String) async throws -> Bool {
         

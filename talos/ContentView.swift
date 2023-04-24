@@ -87,7 +87,6 @@ struct ContentView: View {
     func testGenEmbeddingAndUpsert() {
         let config = URLSessionConfiguration.default
         let urlSession = URLSession(configuration: config,delegate:nil, delegateQueue: .main)
-        urlSession.downl
         
         
         let openAIClient = OpenAIClient.shared
