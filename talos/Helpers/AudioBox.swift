@@ -7,18 +7,25 @@
 
 import Foundation
 import AVFoundation
-
+import Speech
 
 
 class AudioBox : NSObject, ObservableObject {
     
     /// Different ways to get recording of audio
-    ///     1. AVAudioRecorder
-    ///     2. AVAudioEngine
+    ///     1. AVAudioRecorder - pre-recorded
+    ///     2. AVAudioEngine - live buffer
 
     @Published var status: AudioStatus = .stopped
+    @Published var transcript : String = ""
     
     var audioRecorder : AVAudioRecorder?
+    var audioEngine : AVAudioEngine?
+    
+    /// Speech Recognition Properties
+    var speechRecognizer : SFSpeechRecognizer?
+    var recognitionRequest : SFSpeechURLRecognitionRequest?
+    
     
     var urlForRecording : URL {
         let fileManager = FileManager.default
@@ -49,6 +56,7 @@ class AudioBox : NSObject, ObservableObject {
     }
     
     func startRecording() {
+        setupRecorder()
         audioRecorder?.record()
         status = .recording
     }
@@ -56,6 +64,71 @@ class AudioBox : NSObject, ObservableObject {
     func stopRecording() {
         audioRecorder?.stop()
         status = .stopped
+    }
+    
+    
+    //---- Speech Recognition Methods ----\\
+    
+    func setupSpeechRecognizer() {
+        guard let recognizer = SFSpeechRecognizer(locale: .current) else { return }
+        recognizer.supportsOnDeviceRecognition = true
+        
+        speechRecognizer = recognizer
+    }
+    
+    func setupRecognitionRequest() {
+        let request = SFSpeechURLRecognitionRequest(url: urlForRecording)
+        request.requiresOnDeviceRecognition = true
+        request.addsPunctuation = true
+        
+        recognitionRequest = request
+    }
+    
+    func transcribeAudioFile() {
+        // 1. Setup Speech Recognizer
+        // 2. Setup Recognition Request
+        // 3. Transcribe
+        
+        setupSpeechRecognizer()
+        
+        guard
+            let speechRecognizer,
+            speechRecognizer.isAvailable else {
+            transcript = "Speech recognizer is unavailable"
+            return
+        }
+        
+        setupRecognitionRequest()
+        
+        guard let recognitionRequest else {
+            transcript = "Recognition request isnt available"
+            return
+        }
+        
+        let task = speechRecognizer.recognitionTask(with: recognitionRequest) { result, error in
+            
+            if let result = result {
+                
+                let isTranscriptionComplete = result.isFinal
+                
+                if isTranscriptionComplete {
+                    print(result.bestTranscription.formattedString)
+                } else {
+                    print("Transcription incomplete")
+                }
+                
+            }
+            
+        }
+        
+    }
+    
+    func requestSpeech() {
+        SFSpeechRecognizer.requestAuthorization { _ in }
+    }
+    
+    func requestMicrophone(completion: @escaping (Bool) -> Void) {
+        AVAudioSession.sharedInstance().requestRecordPermission(completion)
     }
     
 }

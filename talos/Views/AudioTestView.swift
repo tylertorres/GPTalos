@@ -10,7 +10,7 @@ import AVFAudio
 
 struct AudioTestView: View {
     
-    @ObservedObject private var audioBox = AudioBox()
+    @StateObject private var audioBox = AudioBox()
     
     @State private var hasAccess = false
     @State private var displayPermissionAccessAlert = false
@@ -40,11 +40,20 @@ struct AudioTestView: View {
                         .background(Color.red)
                         .cornerRadius(15)
                 })
+            
+            Divider().padding()
+            
+            Image(systemName: isRecording() ? "mic" : "mic.slash")
+                .font(.title)
+                .foregroundColor(Color.blue)
+                .padding()
+            
+            Text(audioBox.transcript)
+            
         }
         .padding()
         .onAppear {
-            requestMicrophoneAccess()
-            audioBox.setupRecorder()
+            requestAllPermissions()
         }
         .alert(isPresented: $displayPermissionAccessAlert) {
             Alert(
@@ -53,18 +62,11 @@ struct AudioTestView: View {
                 dismissButton: .default(Text("OK"))
             )
         }
+        .background(Color.white)
     }
     
-    private func requestMicrophoneAccess() {
-        
-        print("In request access")
-        
-        AVAudioSession.sharedInstance().requestRecordPermission { grantedAccess in
-            hasAccess = grantedAccess
-            if !grantedAccess {
-                displayPermissionAccessAlert = true
-            }
-        }
+    private func isRecording() -> Bool {
+        return audioBox.status == .recording
     }
     
     private func configureAndRecord() {
@@ -78,13 +80,39 @@ struct AudioTestView: View {
         print("Starting to record...")
         
         hasAccess
-            ? audioBox.startRecording()
-            : requestMicrophoneAccess()
+        ? audioBox.startRecording()
+        : requestMicrophoneAccess()
     }
     
     private func stop() {
         print("Stopping recording...")
+        
         audioBox.stopRecording()
+        
+        print("\nTranscribing from file")
+        
+        audioBox.transcribeAudioFile()
+    }
+    
+    private func requestSpeechAccess() {
+        print("In request speech access")
+        audioBox.requestSpeech();
+    }
+    
+    private func requestMicrophoneAccess() {
+        print("In request microphone access")
+        audioBox.requestMicrophone { granted in
+            guard granted else {
+                print("Mic access denied")
+                return
+            }
+            hasAccess = granted
+        }
+    }
+    
+    private func requestAllPermissions() {
+        requestMicrophoneAccess()
+        requestSpeechAccess()
     }
     
 }
