@@ -17,7 +17,7 @@ class AudioBox : NSObject, ObservableObject {
     ///     2. AVAudioEngine - live buffer
 
     @Published var status: AudioStatus = .stopped
-    @Published var transcript : String = ""
+    @Published var transcript : String = "TEST"
     
     var audioRecorder : AVAudioRecorder?
     var audioEngine : AVAudioEngine?
@@ -105,14 +105,17 @@ class AudioBox : NSObject, ObservableObject {
             return
         }
         
-        let task = speechRecognizer.recognitionTask(with: recognitionRequest) { result, error in
+        let task = speechRecognizer.recognitionTask(with: recognitionRequest) { [weak self] result, error in
+            guard let self else { return }
             
             if let result = result {
                 
                 let isTranscriptionComplete = result.isFinal
                 
                 if isTranscriptionComplete {
-                    print(result.bestTranscription.formattedString)
+                    let speechText = result.bestTranscription.formattedString
+                    print(speechText)
+                    self.transcript = speechText
                 } else {
                     print("Transcription incomplete")
                 }

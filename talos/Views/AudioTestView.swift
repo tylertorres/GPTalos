@@ -49,6 +49,13 @@ struct AudioTestView: View {
                 .padding()
             
             Text(audioBox.transcript)
+                .font(.body)
+                .foregroundColor(.black)
+                .padding()
+            
+            
+            
+            
             
         }
         .padding()
