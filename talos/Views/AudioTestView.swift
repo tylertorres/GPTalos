@@ -10,7 +10,7 @@ import AVFAudio
 
 struct AudioTestView: View {
     
-    @StateObject private var audioBox = AudioBox()
+    @StateObject private var speechRecognizer = SpeechRecognizer()
     
     @State private var hasAccess = false
     @State private var displayPermissionAccessAlert = false
@@ -31,7 +31,11 @@ struct AudioTestView: View {
             Divider().padding()
             
             Button(
-                action: { stop() },
+                action: {
+                    Task {
+                        await stop()
+                    }
+                },
                 label: {
                     Text("Stop Recording")
                         .fontWeight(.heavy)
@@ -48,13 +52,10 @@ struct AudioTestView: View {
                 .foregroundColor(Color.blue)
                 .padding()
             
-            Text(audioBox.transcript)
+            Text(speechRecognizer.transcript)
                 .font(.body)
                 .foregroundColor(.black)
                 .padding()
-            
-            
-            
             
             
         }
@@ -73,42 +74,42 @@ struct AudioTestView: View {
     }
     
     private func isRecording() -> Bool {
-        return audioBox.status == .recording
+        return speechRecognizer.status == .recording
     }
     
     private func configureAndRecord() {
-        let isRecording = audioBox.status == .recording
+        let isRecording = speechRecognizer.status == .recording
         
         if isRecording {
             print("Stopping current recording")
-            audioBox.stopRecording()
+            speechRecognizer.stopRecording()
         }
         
         print("Starting to record...")
         
         hasAccess
-        ? audioBox.startRecording()
+        ? speechRecognizer.startRecording()
         : requestMicrophoneAccess()
     }
     
-    private func stop() {
+    private func stop() async {
         print("Stopping recording...")
         
-        audioBox.stopRecording()
+        speechRecognizer.stopRecording()
         
         print("\nTranscribing from file")
         
-        audioBox.transcribeAudioFile()
+        await speechRecognizer.transcribeAudioFile()
     }
     
     private func requestSpeechAccess() {
         print("In request speech access")
-        audioBox.requestSpeech();
+        speechRecognizer.requestSpeech();
     }
     
     private func requestMicrophoneAccess() {
         print("In request microphone access")
-        audioBox.requestMicrophone { granted in
+        speechRecognizer.requestMicrophone { granted in
             guard granted else {
                 print("Mic access denied")
                 return

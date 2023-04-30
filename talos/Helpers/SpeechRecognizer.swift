@@ -10,14 +10,15 @@ import AVFoundation
 import Speech
 
 
-class AudioBox : NSObject, ObservableObject {
-    
+class SpeechRecognizer : NSObject, ObservableObject {
     /// Different ways to get recording of audio
     ///     1. AVAudioRecorder - pre-recorded
     ///     2. AVAudioEngine - live buffer
 
     @Published var status: AudioStatus = .stopped
     @Published var transcript : String = "TEST"
+    private var isWhisperEnabled: Bool = true
+    private var openAIClient : OpenAIClient = OpenAIClient.shared
     
     var audioRecorder : AVAudioRecorder?
     var audioEngine : AVAudioEngine?
@@ -30,7 +31,7 @@ class AudioBox : NSObject, ObservableObject {
     var urlForRecording : URL {
         let fileManager = FileManager.default
         let tempDir = fileManager.temporaryDirectory
-        let filePath = "tempRec.caf"
+        let filePath = "audioTwo.m4a"
         
         return tempDir.appendingPathComponent(filePath)
     }
@@ -38,7 +39,7 @@ class AudioBox : NSObject, ObservableObject {
     
     func setupRecorder() {
         let recordSettings : [String : Any] = [
-            AVFormatIDKey: Int(kAudioFormatLinearPCM),
+            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
             AVSampleRateKey: 44100.0,
             AVNumberOfChannelsKey: 1,
             AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
@@ -56,7 +57,10 @@ class AudioBox : NSObject, ObservableObject {
     }
     
     func startRecording() {
-        setupRecorder()
+        if audioRecorder == nil {
+            print("\nCreating recorder...")
+            setupRecorder()
+        }
         audioRecorder?.record()
         status = .recording
     }
@@ -84,7 +88,7 @@ class AudioBox : NSObject, ObservableObject {
         recognitionRequest = request
     }
     
-    func transcribeAudioFile() {
+    func transcribeAudioFile() async {
         // 1. Setup Speech Recognizer
         // 2. Setup Recognition Request
         // 3. Transcribe
@@ -95,6 +99,11 @@ class AudioBox : NSObject, ObservableObject {
             let speechRecognizer,
             speechRecognizer.isAvailable else {
             transcript = "Speech recognizer is unavailable"
+            return
+        }
+        
+        if (isWhisperEnabled) {
+            transcript = await transcribeUsingWhisper()
             return
         }
         
@@ -123,7 +132,22 @@ class AudioBox : NSObject, ObservableObject {
             }
             
         }
+    }
+    
+    private func transcribeUsingWhisper() async -> String {
+    
+        let filePath = urlForRecording.absoluteString
+        let model = "whisper-1"
         
+        var transcribedText : String = ""
+        
+        do {
+            transcribedText = try await openAIClient.createTranscription(with: model)
+        } catch {
+            print(error)
+        }
+        
+        return transcribedText
     }
     
     func requestSpeech() {
@@ -136,6 +160,6 @@ class AudioBox : NSObject, ObservableObject {
     
 }
 
-extension AudioBox : AVAudioRecorderDelegate {
+extension SpeechRecognizer : AVAudioRecorderDelegate {
     
 }

@@ -22,6 +22,8 @@ class OpenAIClient {
     
     private let chatCompletionsEndpoint = "/chat/completions"
     
+    private let whisperEndpoint : String = "/audio/transcriptions"
+    
     private let apiKey = "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" // TODO: turn this into a environment variable
     
     private let chatModel : String = "gpt-3.5-turbo"
@@ -102,6 +104,73 @@ class OpenAIClient {
         let result = completionResponse.choices.first?.message.content
         
         return result ?? ""
+    }
+    
+    func createTranscription(with model: String = "whisper-1") async throws -> String {
+        
+        // Get the audio
+        let audioData = try getAudioData()!
+        
+        print("\nSuccessfully transformed audio into data")
+        
+        // Build request
+        let request = createMultiPartRequest(audioData: audioData, model: model)
+        
+        let (data, _) = try await URLSession.shared.data(for: request)
+        
+        let whisperResponse = try JSONDecoder().decode(OpenAIWhisperReponse.self, from: data)
+        
+        let transcribedText = whisperResponse.text
+                
+        return transcribedText
+    }
+    
+    private func createMultiPartRequest(audioData: Data, model: String) -> URLRequest {
+        let boundary = UUID().uuidString
+        
+        let mimeType = "audio/mp4"
+        let filename = "audioTwo.m4a"
+        
+        // URL Request Building
+        let url = URL(string: baseUrl + version + whisperEndpoint)!
+        let httpBody = createMultiPartBody(with: audioData, modelName: model, mimeType: mimeType, fileName: filename, boundary: boundary)
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.allHTTPHeaderFields = [
+            "Authorization": "Bearer \(apiKey)",
+            "Content-Type": "multipart/form-data; boundary=\(boundary)",
+        ]
+        request.httpBody = httpBody
+        
+        return request
+    }
+    
+    private func createMultiPartBody(with data: Data, modelName: String, mimeType: String, fileName: String, boundary: String) -> Data {
+        var body = Data()
+        
+        // Add audio data
+        body.append("--\(boundary)\r\n".data(using: .utf8)!)
+        body.append("Content-Disposition: form-data; name=\"file\"; filename=\"\(fileName)\"\r\n".data(using: .utf8)!)
+        body.append("Content-Type: \(mimeType)\r\n\r\n".data(using: .utf8)!)
+        body.append(data)
+        body.append("\r\n".data(using: .utf8)!)
+
+        // Add model data
+        body.append("--\(boundary)\r\n".data(using: .utf8)!)
+        body.append("Content-Disposition: form-data; name=\"model\"\r\n\r\n".data(using: .utf8)!)
+        body.append("\(modelName)\r\n".data(using: .utf8)!)
+
+        // Add closing boundary
+        body.append("--\(boundary)--\r\n".data(using: .utf8)!)
+        
+        return body
+    }
+    
+    private func getAudioData() throws -> Data? {
+        let filename = "audioTwo.m4a"
+        let audioFileUrl = FileUtils.getTemporaryDirectory().appendingPathComponent(filename)
+        
+        return try Data(contentsOf: audioFileUrl)
     }
     
 }
