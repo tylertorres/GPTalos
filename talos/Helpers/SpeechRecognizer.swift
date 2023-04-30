@@ -14,7 +14,7 @@ class SpeechRecognizer : NSObject, ObservableObject {
     /// Different ways to get recording of audio
     ///     1. AVAudioRecorder - pre-recorded
     ///     2. AVAudioEngine - live buffer
-
+    
     @Published var status: AudioStatus = .stopped
     @Published var transcript : String = "TEST"
     private var isWhisperEnabled: Bool = true
@@ -44,7 +44,7 @@ class SpeechRecognizer : NSObject, ObservableObject {
             AVNumberOfChannelsKey: 1,
             AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
         ]
-
+        
         do {
             audioRecorder = try AVAudioRecorder(url: urlForRecording, settings: recordSettings)
             audioRecorder?.delegate = self
@@ -103,8 +103,12 @@ class SpeechRecognizer : NSObject, ObservableObject {
         }
         
         if (isWhisperEnabled) {
-            transcript = await transcribeUsingWhisper()
+            let newTranscript = await transcribeUsingWhisper()
+            DispatchQueue.main.async {
+                self.transcript = newTranscript
+            }
             return
+            
         }
         
         setupRecognitionRequest()
@@ -135,14 +139,11 @@ class SpeechRecognizer : NSObject, ObservableObject {
     }
     
     private func transcribeUsingWhisper() async -> String {
-    
-        let filePath = urlForRecording.absoluteString
-        let model = "whisper-1"
         
         var transcribedText : String = ""
         
         do {
-            transcribedText = try await openAIClient.createTranscription(with: model)
+            transcribedText = try await openAIClient.createTranscription()
         } catch {
             print(error)
         }
