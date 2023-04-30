@@ -130,10 +130,16 @@ class OpenAIClient {
         
         let mimeType = "audio/mp4"
         let filename = "audioTwo.m4a"
+        let language = "en"
         
         // URL Request Building
         let url = URL(string: baseUrl + version + whisperEndpoint)!
-        let httpBody = createMultiPartBody(with: audioData, modelName: model, mimeType: mimeType, fileName: filename, boundary: boundary)
+        let httpBody = createMultiPartBody(with: audioData,
+                                           modelName: model,
+                                           mimeType: mimeType,
+                                           fileName: filename,
+                                           boundary: boundary,
+                                           language: language)
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.allHTTPHeaderFields = [
@@ -145,7 +151,12 @@ class OpenAIClient {
         return request
     }
     
-    private func createMultiPartBody(with data: Data, modelName: String, mimeType: String, fileName: String, boundary: String) -> Data {
+    private func createMultiPartBody(with data: Data,
+                                     modelName: String,
+                                     mimeType: String,
+                                     fileName: String,
+                                     boundary: String,
+                                     language: String) -> Data {
         var body = Data()
         
         // Add audio data
@@ -159,6 +170,11 @@ class OpenAIClient {
         body.append("--\(boundary)\r\n".data(using: .utf8)!)
         body.append("Content-Disposition: form-data; name=\"model\"\r\n\r\n".data(using: .utf8)!)
         body.append("\(modelName)\r\n".data(using: .utf8)!)
+        
+        // Add optional input language for faster latency per OpenAI docs
+        body.append("--\(boundary)\r\n".data(using: .utf8)!)
+        body.append("Content-Disposition: form-data; name=\"language\"\r\n\r\n".data(using: .utf8)!)
+        body.append("\(language)\r\n".data(using: .utf8)!)
 
         // Add closing boundary
         body.append("--\(boundary)--\r\n".data(using: .utf8)!)
