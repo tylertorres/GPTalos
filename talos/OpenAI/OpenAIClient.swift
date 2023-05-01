@@ -74,7 +74,7 @@ class OpenAIClient {
         let messages : [[String : String]]
     }
     
-    func createChatCompletion(model: String? = "gpt-3.5-turbo",
+    func createChatCompletion(model: String? = "gpt-4",
                               prompt: String,
                               temperature: Float) async throws -> String {
         
@@ -175,5 +175,4 @@ class OpenAIClient {
         
         return body
     }
-    
 }

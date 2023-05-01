@@ -97,9 +97,17 @@ class SpeechRecognizer : NSObject, ObservableObject {
     func transcribeAudioFile() async {
         let newTranscript = await transcriber.transcribe()
         
-        DispatchQueue.main.async {
-            self.transcript = newTranscript
+        do {
+            let response = try await openAIClient.createChatCompletion(prompt: newTranscript, temperature: 0.5)
+            
+            DispatchQueue.main.async {
+                self.transcript = response
+            }
+            
+        } catch {
+            print(error.localizedDescription)
         }
+                
         // Cleanup of the intermediate audio recording
         FileUtils.deleteAudioFile()
     }
@@ -109,7 +117,7 @@ class SpeechRecognizer : NSObject, ObservableObject {
         
         let utterance = AVSpeechUtterance(string: transcript)
         utterance.voice = AVSpeechSynthesisVoice(identifier: zoeVoiceId)
-        utterance.rate = 0.45
+        utterance.rate = 0.5 // default
         
         speechSynthesizer.speak(utterance)
     }
