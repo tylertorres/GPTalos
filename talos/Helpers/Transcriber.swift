@@ -33,7 +33,6 @@ class Transcriber {
         let transcribedText = try await openAIClient.createTranscription(for: audioData)
         
         return transcribedText
-        
     }
     
     private func transcribeNative() async throws -> String {

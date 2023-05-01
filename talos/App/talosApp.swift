@@ -31,7 +31,8 @@ struct talosApp: App {
     
     var body: some Scene {
         WindowGroup {
-            AudioTestView()
+            HomeView()
+                .environment(\.colorScheme, .light)
         }
     }
 }

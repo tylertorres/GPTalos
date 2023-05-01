@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F444D6929FF7E0800FBF0A3 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F444D6829FF7E0800FBF0A3 /* HomeView.swift */; };
+		2F444D6B29FF8FCB00FBF0A3 /* Color+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F444D6A29FF8FCB00FBF0A3 /* Color+Ext.swift */; };
 		2F7EB35F29F5F26700AE3A20 /* AudioStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7EB35E29F5F26700AE3A20 /* AudioStatus.swift */; };
 		2FCA52EF29F0B15B00D619AD /* talosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCA52EE29F0B15B00D619AD /* talosApp.swift */; };
 		2FCA52F129F0B15B00D619AD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCA52F029F0B15B00D619AD /* ContentView.swift */; };
@@ -34,6 +36,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2F444D6829FF7E0800FBF0A3 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		2F444D6A29FF8FCB00FBF0A3 /* Color+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Ext.swift"; sourceTree = "<group>"; };
 		2F7EB35E29F5F26700AE3A20 /* AudioStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioStatus.swift; sourceTree = "<group>"; };
 		2FCA52EB29F0B15B00D619AD /* talos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = talos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FCA52EE29F0B15B00D619AD /* talosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talosApp.swift; sourceTree = "<group>"; };
@@ -175,6 +179,7 @@
 		2FE04C8329F38E3200445B8A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				2F444D6A29FF8FCB00FBF0A3 /* Color+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -195,6 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				2FE04C9129F5D13F00445B8A /* AudioTestView.swift */,
+				2F444D6829FF7E0800FBF0A3 /* HomeView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -290,6 +296,7 @@
 				2FE04C8729F39C0D00445B8A /* AnyCodable.swift in Sources */,
 				2F7EB35F29F5F26700AE3A20 /* AudioStatus.swift in Sources */,
 				2FE04C9229F5D13F00445B8A /* AudioTestView.swift in Sources */,
+				2F444D6B29FF8FCB00FBF0A3 /* Color+Ext.swift in Sources */,
 				2FE04C8C29F5C10400445B8A /* Test.swift in Sources */,
 				2FCA530329F0D0E000D619AD /* OpenAIEmbeddingResponse.swift in Sources */,
 				2FCA531229F2056400D619AD /* TaskManager.swift in Sources */,
@@ -306,6 +313,7 @@
 				2FCA531029F1EED300D619AD /* Queue.swift in Sources */,
 				2FE2EF5129FC907E00E4D34E /* OpenAIWhisperResponse.swift in Sources */,
 				2FCA530729F0DD0800D619AD /* PineconeClient.swift in Sources */,
+				2F444D6929FF7E0800FBF0A3 /* HomeView.swift in Sources */,
 				2FE2EF5529FE096000E4D34E /* Transcriber.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -57,7 +57,6 @@ class SpeechRecognizer : NSObject, ObservableObject {
         } catch {
             print("Error setting up recorder with error : \(error.localizedDescription)")
         }
-        
     }
     
     func startRecording() {
