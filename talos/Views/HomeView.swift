@@ -9,15 +9,12 @@ import SwiftUI
 
 struct HomeView: View {
     
-    var randomColor : Color {
-        let red = Double.random(in: 0...1)
-        let green = Double.random(in: 0...1)
-        let blue = Double.random(in: 0...1)
-
-        return Color(red: red, green: green, blue: blue)
-    }
+    @StateObject private var speechRecognizer = SpeechRecognizer()
     
-    var color : Color = Color(hex: "#006400")
+    @State private var isRecording : Bool = false
+    @State private var hasAccess : Bool = false
+    @State private var color : Color = Color(hex: "#006400")
+    @State private var animate : Bool = false
     
     var body: some View {
         
@@ -28,17 +25,54 @@ struct HomeView: View {
                 color.edgesIgnoringSafeArea(.all)
                     .cornerRadius(20)
                 
-                VStack {
-                    
-                    Text("Hello, World!")
-                        .font(.largeTitle)
-                        .foregroundColor(.white)
-                    Text("I am the greatest there is")
-                        .font(.largeTitle)
-                        .foregroundColor(.white)
-                }
+                Button(
+                    action: {
+                        Task { await onTapped() }
+                    }) {
+                        
+                        VStack {
+                            
+                            Text(speechRecognizer.transcript)
+                                .font(.title)
+                                .foregroundColor(.white)
+                                .padding(.top, 50)
+                            
+                            Button(
+                                action: {
+                                    speak()
+                                },
+                                label: {
+                                    Text("Speak")
+                                        .font(.largeTitle)
+                                        .foregroundColor(.white)
+                                        .padding()
+                                        .background(Color.secondary)
+                                        .cornerRadius(15)
+                                        .padding()
+                                })
+                            
+                            Spacer()
+                            
+                            HStack {
+                                
+                                Image("twitter")
+                                    .resizable()
+                                    .foregroundColor(Color.black)
+                                    .frame(width: 30, height: 30)
+                                    .colorInvert()
+                                
+                            }.padding()
+                            
+                            Divider()
+                                .background(Color.white)
+                                .frame(width: 100, height: 1)
+                            
+                        }
+                        .padding()
+                    }
                 
             }
+            .opacity(animate ? 0.8 : 1.0)
             .padding(.init(top: 20, leading: 20, bottom: 0, trailing: 20))
             .shadow(radius: 15)
             .toolbar {
@@ -52,10 +86,63 @@ struct HomeView: View {
                         }
                     )
                 }
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Text("Quotes")
+                        .font(.largeTitle)
+                        .bold()
+                }
             }
-            
+            .onAppear {
+                requestAllPermissions()
+            }
+
         }
     }
+    
+    private func speak() {
+        speechRecognizer.speak()
+    }
+    
+    private func onTapped() async {
+        if !isRecording {
+            isRecording = true
+            withAnimation(.easeInOut(duration: 0.5)) {
+                animate = true
+            }
+
+            speechRecognizer.startRecording()
+        } else {
+            isRecording = false
+
+            speechRecognizer.stopRecording()
+            await speechRecognizer.transcribeAudioFile()
+
+            withAnimation(.easeInOut(duration: 0.5)) {
+                animate = false
+            }
+        }
+    }
+    private func requestAllPermissions() {
+        requestMicrophoneAccess()
+        requestSpeechAccess()
+    }
+    
+    private func requestSpeechAccess() {
+        print("In request speech access")
+        speechRecognizer.requestSpeech();
+    }
+    
+    private func requestMicrophoneAccess() {
+        print("In request microphone access")
+        speechRecognizer.requestMicrophone { granted in
+            guard granted else {
+                print("Mic access denied")
+                return
+            }
+            hasAccess = granted
+        }
+    }
+    
 }
 
 struct HomeView_Previews: PreviewProvider {

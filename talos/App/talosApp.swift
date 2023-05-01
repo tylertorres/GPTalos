@@ -14,7 +14,7 @@ class AppDelegate : NSObject, UIApplicationDelegate {
         let session = AVAudioSession.sharedInstance()
         
         do {
-            try session.setCategory(.playAndRecord, options:.duckOthers)
+            try session.setCategory(.playAndRecord, options: .defaultToSpeaker )
             try session.setActive(true, options: .notifyOthersOnDeactivation)
         } catch {
             print("AVAudioSession configuration error : \(error.localizedDescription)")

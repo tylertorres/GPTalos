@@ -9,7 +9,7 @@ import SwiftUI
 
 extension Color {
     
-    init(hex: String) {
+    init(hex: String, opacity: Double = 1.0) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
         var int = UInt64()
         Scanner(string: hex).scanHexInt64(&int)
@@ -18,9 +18,7 @@ extension Color {
             red: Double((int >> 16) & 0xFF) / 255,
             green: Double((int >> 8) & 0xFF) / 255,
             blue: Double(int & 0xFF) / 255,
-            opacity: 1.0
+            opacity: opacity
         )
     }
 }
-
-let darkGreen = Color(hex: "#006400")

@@ -78,9 +78,7 @@ struct AudioTestView: View {
     }
     
     private func configureAndRecord() {
-        let isRecording = speechRecognizer.status == .recording
-        
-        if isRecording {
+        if isRecording() {
             print("Stopping current recording")
             speechRecognizer.stopRecording()
         }

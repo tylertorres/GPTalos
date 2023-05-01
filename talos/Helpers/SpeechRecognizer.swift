@@ -19,10 +19,11 @@ class SpeechRecognizer : NSObject, ObservableObject {
     ///     2. AVAudioEngine - live buffer
     
     @Published var status: AudioStatus = .stopped
-    @Published var transcript : String = "TEST"
+    @Published var transcript : String = "Tap anywhere to start recording..."
     
     private var openAIClient : OpenAIClient = OpenAIClient.shared
     private let transcriber = Transcriber()
+    private let speechSynthesizer = AVSpeechSynthesizer()
     
     var audioRecorder : AVAudioRecorder?
     var audioEngine : AVAudioEngine?
@@ -66,6 +67,8 @@ class SpeechRecognizer : NSObject, ObservableObject {
         }
         audioRecorder?.record()
         status = .recording
+        
+        transcript = "Listening..."
     }
     
     func stopRecording() {
@@ -94,10 +97,21 @@ class SpeechRecognizer : NSObject, ObservableObject {
     func transcribeAudioFile() async {
         let newTranscript = await transcriber.transcribe()
         
-        print(newTranscript)
-        
+        DispatchQueue.main.async {
+            self.transcript = newTranscript
+        }
         // Cleanup of the intermediate audio recording
         FileUtils.deleteAudioFile()
+    }
+    
+    func speak() {
+        let zoeVoiceId = "com.apple.voice.enhanced.en-US.Zoe"
+        
+        let utterance = AVSpeechUtterance(string: transcript)
+        utterance.voice = AVSpeechSynthesisVoice(identifier: zoeVoiceId)
+        utterance.rate = 0.45
+        
+        speechSynthesizer.speak(utterance)
     }
         
 //    func transcribeAudioFile() async {
