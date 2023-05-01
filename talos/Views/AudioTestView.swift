@@ -96,8 +96,12 @@ struct AudioTestView: View {
         print("Stopping recording...")
         
         speechRecognizer.stopRecording()
-        
-        print("\nTranscribing from file")
+                
+        await transcribe()
+    }
+    
+    private func transcribe() async {
+        print("\nTranscribing audio...")
         
         await speechRecognizer.transcribeAudioFile()
     }

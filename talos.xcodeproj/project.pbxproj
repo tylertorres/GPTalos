@@ -28,7 +28,9 @@
 		2FE04C8E29F5C7D300445B8A /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE04C8D29F5C7D300445B8A /* SpeechRecognizer.swift */; };
 		2FE04C9229F5D13F00445B8A /* AudioTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE04C9129F5D13F00445B8A /* AudioTestView.swift */; };
 		2FE2EF5129FC907E00E4D34E /* OpenAIWhisperResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE2EF5029FC907E00E4D34E /* OpenAIWhisperResponse.swift */; };
-		2FE2EF5329FDADBF00E4D34E /* HelperFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE2EF5229FDADBF00E4D34E /* HelperFunc.swift */; };
+		2FE2EF5329FDADBF00E4D34E /* FileUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE2EF5229FDADBF00E4D34E /* FileUtils.swift */; };
+		2FE2EF5529FE096000E4D34E /* Transcriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE2EF5429FE096000E4D34E /* Transcriber.swift */; };
+		2FE2EF5829FF3BEF00E4D34E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE2EF5729FF3BEF00E4D34E /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,7 +56,9 @@
 		2FE04C8D29F5C7D300445B8A /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
 		2FE04C9129F5D13F00445B8A /* AudioTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioTestView.swift; sourceTree = "<group>"; };
 		2FE2EF5029FC907E00E4D34E /* OpenAIWhisperResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIWhisperResponse.swift; sourceTree = "<group>"; };
-		2FE2EF5229FDADBF00E4D34E /* HelperFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperFunc.swift; sourceTree = "<group>"; };
+		2FE2EF5229FDADBF00E4D34E /* FileUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUtils.swift; sourceTree = "<group>"; };
+		2FE2EF5429FE096000E4D34E /* Transcriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transcriber.swift; sourceTree = "<group>"; };
+		2FE2EF5729FF3BEF00E4D34E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +91,7 @@
 		2FCA52ED29F0B15B00D619AD /* talos */ = {
 			isa = PBXGroup;
 			children = (
+				2FE2EF5629FF3BE000E4D34E /* Constants */,
 				2FE2EF4F29FC887600E4D34E /* App */,
 				2FE04C8F29F5D0F900445B8A /* Views */,
 				2FE04C8829F39D9F00445B8A /* Helpers */,
@@ -180,7 +185,8 @@
 				2FE04C8629F39C0D00445B8A /* AnyCodable.swift */,
 				2FE04C8D29F5C7D300445B8A /* SpeechRecognizer.swift */,
 				2F7EB35E29F5F26700AE3A20 /* AudioStatus.swift */,
-				2FE2EF5229FDADBF00E4D34E /* HelperFunc.swift */,
+				2FE2EF5229FDADBF00E4D34E /* FileUtils.swift */,
+				2FE2EF5429FE096000E4D34E /* Transcriber.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -199,6 +205,14 @@
 				2FCA52EE29F0B15B00D619AD /* talosApp.swift */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		2FE2EF5629FF3BE000E4D34E /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				2FE2EF5729FF3BEF00E4D34E /* Constants.swift */,
+			);
+			path = Constants;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -272,6 +286,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2FCA52F129F0B15B00D619AD /* ContentView.swift in Sources */,
+				2FE2EF5829FF3BEF00E4D34E /* Constants.swift in Sources */,
 				2FE04C8729F39C0D00445B8A /* AnyCodable.swift in Sources */,
 				2F7EB35F29F5F26700AE3A20 /* AudioStatus.swift in Sources */,
 				2FE04C9229F5D13F00445B8A /* AudioTestView.swift in Sources */,
@@ -282,7 +297,7 @@
 				2FE04C8A29F4B40300445B8A /* Download.swift in Sources */,
 				2FE04C7F29F2649200445B8A /* LLMTask.swift in Sources */,
 				2FCA530929F1DDE200D619AD /* PineconeQueryResponse.swift in Sources */,
-				2FE2EF5329FDADBF00E4D34E /* HelperFunc.swift in Sources */,
+				2FE2EF5329FDADBF00E4D34E /* FileUtils.swift in Sources */,
 				2FE04C8229F274DC00445B8A /* OpenAIChatCompletionResponse.swift in Sources */,
 				2FCA530129F0B6B500D619AD /* Embedding.swift in Sources */,
 				2FCA52EF29F0B15B00D619AD /* talosApp.swift in Sources */,
@@ -291,6 +306,7 @@
 				2FCA531029F1EED300D619AD /* Queue.swift in Sources */,
 				2FE2EF5129FC907E00E4D34E /* OpenAIWhisperResponse.swift in Sources */,
 				2FCA530729F0DD0800D619AD /* PineconeClient.swift in Sources */,
+				2FE2EF5529FE096000E4D34E /* Transcriber.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

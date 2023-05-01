@@ -9,6 +9,9 @@ import Foundation
 import AVFoundation
 import Speech
 
+// Class Transcriber
+/// Strictly in charge of transcribing an audio file at a given url
+
 
 class SpeechRecognizer : NSObject, ObservableObject {
     /// Different ways to get recording of audio
@@ -17,8 +20,9 @@ class SpeechRecognizer : NSObject, ObservableObject {
     
     @Published var status: AudioStatus = .stopped
     @Published var transcript : String = "TEST"
-    private var isWhisperEnabled: Bool = true
+    
     private var openAIClient : OpenAIClient = OpenAIClient.shared
+    private let transcriber = Transcriber()
     
     var audioRecorder : AVAudioRecorder?
     var audioEngine : AVAudioEngine?
@@ -31,7 +35,7 @@ class SpeechRecognizer : NSObject, ObservableObject {
     var urlForRecording : URL {
         let fileManager = FileManager.default
         let tempDir = fileManager.temporaryDirectory
-        let filePath = "audioTwo.m4a"
+        let filePath = "audio.m4a"
         
         return tempDir.appendingPathComponent(filePath)
     }
@@ -89,67 +93,55 @@ class SpeechRecognizer : NSObject, ObservableObject {
     }
     
     func transcribeAudioFile() async {
-        // 1. Setup Speech Recognizer
-        // 2. Setup Recognition Request
-        // 3. Transcribe
+        let newTranscript = await transcriber.transcribe()
         
-        setupSpeechRecognizer()
+        print(newTranscript)
         
-        guard
-            let speechRecognizer,
-            speechRecognizer.isAvailable else {
-            transcript = "Speech recognizer is unavailable"
-            return
-        }
-        
-        if (isWhisperEnabled) {
-            let newTranscript = await transcribeUsingWhisper()
-            DispatchQueue.main.async {
-                self.transcript = newTranscript
-            }
-            return
-            
-        }
-        
-        setupRecognitionRequest()
-        
-        guard let recognitionRequest else {
-            transcript = "Recognition request isnt available"
-            return
-        }
-        
-        let task = speechRecognizer.recognitionTask(with: recognitionRequest) { [weak self] result, error in
-            guard let self else { return }
-            
-            if let result = result {
-                
-                let isTranscriptionComplete = result.isFinal
-                
-                if isTranscriptionComplete {
-                    let speechText = result.bestTranscription.formattedString
-                    print(speechText)
-                    self.transcript = speechText
-                } else {
-                    print("Transcription incomplete")
-                }
-                
-            }
-            
-        }
+        // Cleanup of the intermediate audio recording
+        FileUtils.deleteAudioFile()
     }
+        
+//    func transcribeAudioFile() async {
+//        // 1. Setup Speech Recognizer
+//        // 2. Setup Recognition Request
+//        // 3. Transcribe
+//
+//        setupSpeechRecognizer()
+//
+//        guard
+//            let speechRecognizer,
+//            speechRecognizer.isAvailable else {
+//            transcript = "Speech recognizer is unavailable"
+//            return
+//        }
+//
+//        setupRecognitionRequest()
+//
+//        guard let recognitionRequest else {
+//            transcript = "Recognition request isnt available"
+//            return
+//        }
+//
+//        let task = speechRecognizer.recognitionTask(with: recognitionRequest) { [weak self] result, error in
+//            guard let self else { return }
+//
+//            if let result = result {
+//
+//                let isTranscriptionComplete = result.isFinal
+//
+//                if isTranscriptionComplete {
+//                    let speechText = result.bestTranscription.formattedString
+//                    print(speechText)
+//                    self.transcript = speechText
+//                } else {
+//                    print("Transcription incomplete")
+//                }
+//
+//            }
+//
+//        }
+//    }
     
-    private func transcribeUsingWhisper() async -> String {
-        
-        var transcribedText : String = ""
-        
-        do {
-            transcribedText = try await openAIClient.createTranscription()
-        } catch {
-            print(error)
-        }
-        
-        return transcribedText
-    }
     
     func requestSpeech() {
         SFSpeechRecognizer.requestAuthorization { _ in }
@@ -161,6 +153,6 @@ class SpeechRecognizer : NSObject, ObservableObject {
     
 }
 
-extension SpeechRecognizer : AVAudioRecorderDelegate {
-    
-}
+
+// Needed Delegate
+extension SpeechRecognizer : AVAudioRecorderDelegate {}

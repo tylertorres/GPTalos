@@ -106,13 +106,7 @@ class OpenAIClient {
         return result ?? ""
     }
     
-    func createTranscription(with model: String = "whisper-1") async throws -> String {
-        
-        // Get the audio
-        let audioData = try getAudioData()!
-        
-        print("\nSuccessfully transformed audio into data")
-        
+    func createTranscription(for audioData: Data, with model: String = "whisper-1") async throws -> String {
         // Build request
         let request = createMultiPartRequest(audioData: audioData, model: model)
         
@@ -180,13 +174,6 @@ class OpenAIClient {
         body.append("--\(boundary)--\r\n".data(using: .utf8)!)
         
         return body
-    }
-    
-    private func getAudioData() throws -> Data? {
-        let filename = "audioTwo.m4a"
-        let audioFileUrl = FileUtils.getTemporaryDirectory().appendingPathComponent(filename)
-        
-        return try Data(contentsOf: audioFileUrl)
     }
     
 }
