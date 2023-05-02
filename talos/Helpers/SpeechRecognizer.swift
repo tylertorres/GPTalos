@@ -27,11 +27,11 @@ class SpeechRecognizer : NSObject, ObservableObject {
     
     var audioRecorder : AVAudioRecorder?
     var audioEngine : AVAudioEngine?
+    var audioPlayer : AVAudioPlayer?
     
     /// Speech Recognition Properties
     var speechRecognizer : SFSpeechRecognizer?
     var recognitionRequest : SFSpeechURLRecognitionRequest?
-    
     
     var urlForRecording : URL {
         let fileManager = FileManager.default
@@ -41,7 +41,7 @@ class SpeechRecognizer : NSObject, ObservableObject {
         return tempDir.appendingPathComponent(filePath)
     }
     
-    
+    // You are a world class product designer
     func setupRecorder() {
         let recordSettings : [String : Any] = [
             AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
@@ -100,6 +100,9 @@ class SpeechRecognizer : NSObject, ObservableObject {
         do {
             let response = try await openAIClient.createChatCompletion(prompt: newTranscript, temperature: 0.5)
             
+            // play response
+            await speakUsingGoogleTTS(with: response)
+            
             DispatchQueue.main.async {
                 self.transcript = response
             }
@@ -112,6 +115,23 @@ class SpeechRecognizer : NSObject, ObservableObject {
         FileUtils.deleteAudioFile()
     }
     
+    private func speakUsingGoogleTTS(with text: String) async {
+        let googleManager = GoogleTTSManager.shared
+        
+        let audioContent = await googleManager.callTTS(with: text)
+        
+        guard !audioContent.isEmpty,
+              let audioData = Data(base64Encoded: audioContent, options: .ignoreUnknownCharacters) else { return }
+        
+        do {
+            audioPlayer = try AVAudioPlayer(data: audioData)
+            audioPlayer?.prepareToPlay()
+            audioPlayer?.play()
+        } catch {
+            print("Error: \(error.localizedDescription)")
+        }
+    }
+        
     func speak() {
         let zoeVoiceId = "com.apple.voice.enhanced.en-US.Zoe"
         

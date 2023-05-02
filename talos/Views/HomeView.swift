@@ -100,7 +100,8 @@ struct HomeView: View {
     }
     
     private func speak() {
-        speechRecognizer.speak()
+//        speechRecognizer.writeToFile()
+        
     }
     
     private func onTapped() async {

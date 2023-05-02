@@ -21,7 +21,7 @@ class Transcriber {
             return try await transcribeNative()
             
         } catch {
-            print("Error thrown while transcribing")
+            print("Error thrown while transcribing : \(error.localizedDescription)")
             return ""
         }
     }

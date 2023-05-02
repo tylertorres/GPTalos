@@ -26,7 +26,9 @@ class OpenAIClient {
     
     private let apiKey = "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" // TODO: turn this into a environment variable
     
-    private let chatModel : String = "gpt-3.5-turbo"
+    private let turboChatModel : String = "gpt-3.5-turbo"
+    
+    private let gpt4ChatModel : String = "gpt-4"
     
     private let embeddingsModel : String = "text-embedding-ada-002"
     
@@ -65,9 +67,7 @@ class OpenAIClient {
         
         return request
     }
-    
-    func createCompletion() {}
-    
+
     
     struct CreateChatCompletionParams : Codable {
         let model : String

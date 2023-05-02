@@ -33,6 +33,8 @@
 		2FE2EF5329FDADBF00E4D34E /* FileUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE2EF5229FDADBF00E4D34E /* FileUtils.swift */; };
 		2FE2EF5529FE096000E4D34E /* Transcriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE2EF5429FE096000E4D34E /* Transcriber.swift */; };
 		2FE2EF5829FF3BEF00E4D34E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE2EF5729FF3BEF00E4D34E /* Constants.swift */; };
+		2FFC91BA2A00E8B100D75F71 /* GoogleTTSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFC91B92A00E8B100D75F71 /* GoogleTTSManager.swift */; };
+		2FFC91BD2A016D1500D75F71 /* GoogleSynthesizeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFC91BC2A016D1500D75F71 /* GoogleSynthesizeResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,6 +65,8 @@
 		2FE2EF5229FDADBF00E4D34E /* FileUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUtils.swift; sourceTree = "<group>"; };
 		2FE2EF5429FE096000E4D34E /* Transcriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transcriber.swift; sourceTree = "<group>"; };
 		2FE2EF5729FF3BEF00E4D34E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		2FFC91B92A00E8B100D75F71 /* GoogleTTSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleTTSManager.swift; sourceTree = "<group>"; };
+		2FFC91BC2A016D1500D75F71 /* GoogleSynthesizeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSynthesizeResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +99,7 @@
 		2FCA52ED29F0B15B00D619AD /* talos */ = {
 			isa = PBXGroup;
 			children = (
+				2FFC91B82A00E89E00D75F71 /* Google */,
 				2FE2EF5629FF3BE000E4D34E /* Constants */,
 				2FE2EF4F29FC887600E4D34E /* App */,
 				2FE04C8F29F5D0F900445B8A /* Views */,
@@ -221,6 +226,23 @@
 			path = Constants;
 			sourceTree = "<group>";
 		};
+		2FFC91B82A00E89E00D75F71 /* Google */ = {
+			isa = PBXGroup;
+			children = (
+				2FFC91BB2A016CEE00D75F71 /* Models */,
+				2FFC91B92A00E8B100D75F71 /* GoogleTTSManager.swift */,
+			);
+			path = Google;
+			sourceTree = "<group>";
+		};
+		2FFC91BB2A016CEE00D75F71 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2FFC91BC2A016D1500D75F71 /* GoogleSynthesizeResponse.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -301,8 +323,10 @@
 				2FCA530329F0D0E000D619AD /* OpenAIEmbeddingResponse.swift in Sources */,
 				2FCA531229F2056400D619AD /* TaskManager.swift in Sources */,
 				2FCA530D29F1E84A00D619AD /* PineconeUpsertResponse.swift in Sources */,
+				2FFC91BA2A00E8B100D75F71 /* GoogleTTSManager.swift in Sources */,
 				2FE04C8A29F4B40300445B8A /* Download.swift in Sources */,
 				2FE04C7F29F2649200445B8A /* LLMTask.swift in Sources */,
+				2FFC91BD2A016D1500D75F71 /* GoogleSynthesizeResponse.swift in Sources */,
 				2FCA530929F1DDE200D619AD /* PineconeQueryResponse.swift in Sources */,
 				2FE2EF5329FDADBF00E4D34E /* FileUtils.swift in Sources */,
 				2FE04C8229F274DC00445B8A /* OpenAIChatCompletionResponse.swift in Sources */,
