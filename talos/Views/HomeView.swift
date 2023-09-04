@@ -39,7 +39,7 @@ struct HomeView: View {
                             
                             Button(
                                 action: {
-                                    speak()
+//                                    speak()
                                 },
                                 label: {
                                     Text("Speak")
@@ -123,6 +123,7 @@ struct HomeView: View {
             }
         }
     }
+    
     private func requestAllPermissions() {
         requestMicrophoneAccess()
         requestSpeechAccess()
@@ -130,7 +131,7 @@ struct HomeView: View {
     
     private func requestSpeechAccess() {
         print("In request speech access")
-        speechRecognizer.requestSpeech();
+        speechRecognizer.requestSpeech()
     }
     
     private func requestMicrophoneAccess() {

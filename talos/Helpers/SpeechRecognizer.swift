@@ -52,7 +52,7 @@ class SpeechRecognizer : NSObject, ObservableObject {
         
         do {
             audioRecorder = try AVAudioRecorder(url: urlForRecording, settings: recordSettings)
-            audioRecorder?.delegate = self
+            //            audioRecorder?.delegate = self
             
             print("Recorder setup")
         } catch {
@@ -110,7 +110,7 @@ class SpeechRecognizer : NSObject, ObservableObject {
         } catch {
             print(error.localizedDescription)
         }
-                
+        
         // Cleanup of the intermediate audio recording
         FileUtils.deleteAudioFile()
     }
@@ -129,71 +129,72 @@ class SpeechRecognizer : NSObject, ObservableObject {
             audioPlayer?.play()
         } catch {
             print("Error: \(error.localizedDescription)")
+            
         }
     }
         
-    func speak() {
-        let zoeVoiceId = "com.apple.voice.enhanced.en-US.Zoe"
+        func speak() {
+            let zoeVoiceId = "com.apple.voice.enhanced.en-US.Zoe"
+            
+            let utterance = AVSpeechUtterance(string: transcript)
+            utterance.voice = AVSpeechSynthesisVoice(identifier: zoeVoiceId)
+            utterance.rate = 0.5 // default
+            
+            speechSynthesizer.speak(utterance)
+        }
         
-        let utterance = AVSpeechUtterance(string: transcript)
-        utterance.voice = AVSpeechSynthesisVoice(identifier: zoeVoiceId)
-        utterance.rate = 0.5 // default
+        //    func transcribeAudioFile() async {
+        //        // 1. Setup Speech Recognizer
+        //        // 2. Setup Recognition Request
+        //        // 3. Transcribe
+        //
+        //        setupSpeechRecognizer()
+        //
+        //        guard
+        //            let speechRecognizer,
+        //            speechRecognizer.isAvailable else {
+        //            transcript = "Speech recognizer is unavailable"
+        //            return
+        //        }
+        //
+        //        setupRecognitionRequest()
+        //
+        //        guard let recognitionRequest else {
+        //            transcript = "Recognition request isnt available"
+        //            return
+        //        }
+        //
+        //        let task = speechRecognizer.recognitionTask(with: recognitionRequest) { [weak self] result, error in
+        //            guard let self else { return }
+        //
+        //            if let result = result {
+        //
+        //                let isTranscriptionComplete = result.isFinal
+        //
+        //                if isTranscriptionComplete {
+        //                    let speechText = result.bestTranscription.formattedString
+        //                    print(speechText)
+        //                    self.transcript = speechText
+        //                } else {
+        //                    print("Transcription incomplete")
+        //                }
+        //
+        //            }
+        //
+        //        }
+        //    }
         
-        speechSynthesizer.speak(utterance)
-    }
         
-//    func transcribeAudioFile() async {
-//        // 1. Setup Speech Recognizer
-//        // 2. Setup Recognition Request
-//        // 3. Transcribe
-//
-//        setupSpeechRecognizer()
-//
-//        guard
-//            let speechRecognizer,
-//            speechRecognizer.isAvailable else {
-//            transcript = "Speech recognizer is unavailable"
-//            return
-//        }
-//
-//        setupRecognitionRequest()
-//
-//        guard let recognitionRequest else {
-//            transcript = "Recognition request isnt available"
-//            return
-//        }
-//
-//        let task = speechRecognizer.recognitionTask(with: recognitionRequest) { [weak self] result, error in
-//            guard let self else { return }
-//
-//            if let result = result {
-//
-//                let isTranscriptionComplete = result.isFinal
-//
-//                if isTranscriptionComplete {
-//                    let speechText = result.bestTranscription.formattedString
-//                    print(speechText)
-//                    self.transcript = speechText
-//                } else {
-//                    print("Transcription incomplete")
-//                }
-//
-//            }
-//
-//        }
-//    }
-    
-    
-    func requestSpeech() {
-        SFSpeechRecognizer.requestAuthorization { _ in }
+        func requestSpeech() {
+            SFSpeechRecognizer.requestAuthorization { _ in }
+        }
+        
+        func requestMicrophone(completion: @escaping (Bool) -> Void) {
+            AVAudioSession.sharedInstance().requestRecordPermission(completion)
+        }
+        
     }
-    
-    func requestMicrophone(completion: @escaping (Bool) -> Void) {
-        AVAudioSession.sharedInstance().requestRecordPermission(completion)
-    }
-    
-}
 
 
-// Needed Delegate
 extension SpeechRecognizer : AVAudioRecorderDelegate {}
+

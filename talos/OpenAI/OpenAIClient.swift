@@ -24,7 +24,7 @@ class OpenAIClient {
     
     private let whisperEndpoint : String = "/audio/transcriptions"
     
-    private let apiKey = "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" // TODO: turn this into a environment variable
+    private let apiKey = "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" // TODO: turn this into a environment variable
     
     private let turboChatModel : String = "gpt-3.5-turbo"
     
