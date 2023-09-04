@@ -20,6 +20,7 @@ class SpeechRecognizer : NSObject, ObservableObject {
     
     @Published var status: AudioStatus = .stopped
     @Published var transcript : String = "Tap anywhere to start recording..."
+    @Published var hasMicAccess = false
     
     private var openAIClient : OpenAIClient = OpenAIClient.shared
     private let transcriber = Transcriber()
@@ -41,8 +42,9 @@ class SpeechRecognizer : NSObject, ObservableObject {
         return tempDir.appendingPathComponent(filePath)
     }
     
-    // You are a world class product designer
+    
     func setupRecorder() {
+        
         let recordSettings : [String : Any] = [
             AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
             AVSampleRateKey: 44100.0,
@@ -132,68 +134,76 @@ class SpeechRecognizer : NSObject, ObservableObject {
             
         }
     }
+    
+    func speak() {
+        let zoeVoiceId = "com.apple.voice.enhanced.en-US.Zoe"
         
-        func speak() {
-            let zoeVoiceId = "com.apple.voice.enhanced.en-US.Zoe"
-            
-            let utterance = AVSpeechUtterance(string: transcript)
-            utterance.voice = AVSpeechSynthesisVoice(identifier: zoeVoiceId)
-            utterance.rate = 0.5 // default
-            
-            speechSynthesizer.speak(utterance)
-        }
+        let utterance = AVSpeechUtterance(string: transcript)
+        utterance.voice = AVSpeechSynthesisVoice(identifier: zoeVoiceId)
+        utterance.rate = 0.5 // default
         
-        //    func transcribeAudioFile() async {
-        //        // 1. Setup Speech Recognizer
-        //        // 2. Setup Recognition Request
-        //        // 3. Transcribe
-        //
-        //        setupSpeechRecognizer()
-        //
-        //        guard
-        //            let speechRecognizer,
-        //            speechRecognizer.isAvailable else {
-        //            transcript = "Speech recognizer is unavailable"
-        //            return
-        //        }
-        //
-        //        setupRecognitionRequest()
-        //
-        //        guard let recognitionRequest else {
-        //            transcript = "Recognition request isnt available"
-        //            return
-        //        }
-        //
-        //        let task = speechRecognizer.recognitionTask(with: recognitionRequest) { [weak self] result, error in
-        //            guard let self else { return }
-        //
-        //            if let result = result {
-        //
-        //                let isTranscriptionComplete = result.isFinal
-        //
-        //                if isTranscriptionComplete {
-        //                    let speechText = result.bestTranscription.formattedString
-        //                    print(speechText)
-        //                    self.transcript = speechText
-        //                } else {
-        //                    print("Transcription incomplete")
-        //                }
-        //
-        //            }
-        //
-        //        }
-        //    }
-        
-        
-        func requestSpeech() {
-            SFSpeechRecognizer.requestAuthorization { _ in }
-        }
-        
-        func requestMicrophone(completion: @escaping (Bool) -> Void) {
-            AVAudioSession.sharedInstance().requestRecordPermission(completion)
-        }
-        
+        speechSynthesizer.speak(utterance)
     }
+    
+    //    func transcribeAudioFile() async {
+    //        // 1. Setup Speech Recognizer
+    //        // 2. Setup Recognition Request
+    //        // 3. Transcribe
+    //
+    //        setupSpeechRecognizer()
+    //
+    //        guard
+    //            let speechRecognizer,
+    //            speechRecognizer.isAvailable else {
+    //            transcript = "Speech recognizer is unavailable"
+    //            return
+    //        }
+    //
+    //        setupRecognitionRequest()
+    //
+    //        guard let recognitionRequest else {
+    //            transcript = "Recognition request isnt available"
+    //            return
+    //        }
+    //
+    //        let task = speechRecognizer.recognitionTask(with: recognitionRequest) { [weak self] result, error in
+    //            guard let self else { return }
+    //
+    //            if let result = result {
+    //
+    //                let isTranscriptionComplete = result.isFinal
+    //
+    //                if isTranscriptionComplete {
+    //                    let speechText = result.bestTranscription.formattedString
+    //                    print(speechText)
+    //                    self.transcript = speechText
+    //                } else {
+    //                    print("Transcription incomplete")
+    //                }
+    //
+    //            }
+    //
+    //        }
+    //    }
+    
+    
+    // Permissions Requesting
+    
+//    func requestPermissions() {
+//        requestSpeech()
+//        requestMicrophone(completion: <#T##(Bool) -> Void#>)
+//
+//    }
+    
+    func requestSpeech() {
+        SFSpeechRecognizer.requestAuthorization { _ in }
+    }
+    
+    func requestMicrophone(completion: @escaping (Bool) -> Void) {
+        AVAudioSession.sharedInstance().requestRecordPermission(completion)
+    }
+    
+}
 
 
 extension SpeechRecognizer : AVAudioRecorderDelegate {}

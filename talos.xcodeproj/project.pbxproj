@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F3182002AA6807200BD6DA5 /* Debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 2F3181FF2AA6807200BD6DA5 /* Debug.xcconfig */; };
+		2F3182032AA6860600BD6DA5 /* TalosViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3182022AA6860600BD6DA5 /* TalosViewModel.swift */; };
+		2F3182052AA686D500BD6DA5 /* TalosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3182042AA686D500BD6DA5 /* TalosView.swift */; };
 		2F444D6929FF7E0800FBF0A3 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F444D6829FF7E0800FBF0A3 /* HomeView.swift */; };
 		2F444D6B29FF8FCB00FBF0A3 /* Color+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F444D6A29FF8FCB00FBF0A3 /* Color+Ext.swift */; };
 		2F7EB35F29F5F26700AE3A20 /* AudioStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7EB35E29F5F26700AE3A20 /* AudioStatus.swift */; };
@@ -33,11 +36,15 @@
 		2FE2EF5329FDADBF00E4D34E /* FileUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE2EF5229FDADBF00E4D34E /* FileUtils.swift */; };
 		2FE2EF5529FE096000E4D34E /* Transcriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE2EF5429FE096000E4D34E /* Transcriber.swift */; };
 		2FE2EF5829FF3BEF00E4D34E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE2EF5729FF3BEF00E4D34E /* Constants.swift */; };
+		2FFB574F2AA69722000F0889 /* RoundedRectangleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFB574E2AA69722000F0889 /* RoundedRectangleButton.swift */; };
 		2FFC91BA2A00E8B100D75F71 /* GoogleTTSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFC91B92A00E8B100D75F71 /* GoogleTTSManager.swift */; };
 		2FFC91BD2A016D1500D75F71 /* GoogleSynthesizeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFC91BC2A016D1500D75F71 /* GoogleSynthesizeResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2F3181FF2AA6807200BD6DA5 /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = config/Debug.xcconfig; sourceTree = "<group>"; };
+		2F3182022AA6860600BD6DA5 /* TalosViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalosViewModel.swift; sourceTree = "<group>"; };
+		2F3182042AA686D500BD6DA5 /* TalosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalosView.swift; sourceTree = "<group>"; };
 		2F444D6829FF7E0800FBF0A3 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		2F444D6A29FF8FCB00FBF0A3 /* Color+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Ext.swift"; sourceTree = "<group>"; };
 		2F7EB35E29F5F26700AE3A20 /* AudioStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioStatus.swift; sourceTree = "<group>"; };
@@ -65,6 +72,7 @@
 		2FE2EF5229FDADBF00E4D34E /* FileUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUtils.swift; sourceTree = "<group>"; };
 		2FE2EF5429FE096000E4D34E /* Transcriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transcriber.swift; sourceTree = "<group>"; };
 		2FE2EF5729FF3BEF00E4D34E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		2FFB574E2AA69722000F0889 /* RoundedRectangleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedRectangleButton.swift; sourceTree = "<group>"; };
 		2FFC91B92A00E8B100D75F71 /* GoogleTTSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleTTSManager.swift; sourceTree = "<group>"; };
 		2FFC91BC2A016D1500D75F71 /* GoogleSynthesizeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSynthesizeResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -80,6 +88,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2F3182012AA685F000BD6DA5 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				2F3182022AA6860600BD6DA5 /* TalosViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		2FCA52E229F0B15A00D619AD = {
 			isa = PBXGroup;
 			children = (
@@ -99,6 +115,7 @@
 		2FCA52ED29F0B15B00D619AD /* talos */ = {
 			isa = PBXGroup;
 			children = (
+				2F3182012AA685F000BD6DA5 /* ViewModels */,
 				2FFC91B82A00E89E00D75F71 /* Google */,
 				2FE2EF5629FF3BE000E4D34E /* Constants */,
 				2FE2EF4F29FC887600E4D34E /* App */,
@@ -110,6 +127,7 @@
 				2FCA52FF29F0B6A600D619AD /* Models */,
 				2FCA52FC29F0B2D800D619AD /* OpenAI */,
 				2FCA52F029F0B15B00D619AD /* ContentView.swift */,
+				2F3181FF2AA6807200BD6DA5 /* Debug.xcconfig */,
 				2FCA52F229F0B15C00D619AD /* Assets.xcassets */,
 				2FCA52F429F0B15C00D619AD /* Preview Content */,
 				2FCA531129F2056400D619AD /* TaskManager.swift */,
@@ -206,6 +224,8 @@
 			children = (
 				2FE04C9129F5D13F00445B8A /* AudioTestView.swift */,
 				2F444D6829FF7E0800FBF0A3 /* HomeView.swift */,
+				2F3182042AA686D500BD6DA5 /* TalosView.swift */,
+				2FFB574E2AA69722000F0889 /* RoundedRectangleButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -303,6 +323,7 @@
 			files = (
 				2FCA52F629F0B15C00D619AD /* Preview Assets.xcassets in Resources */,
 				2FCA52F329F0B15C00D619AD /* Assets.xcassets in Resources */,
+				2F3182002AA6807200BD6DA5 /* Debug.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,6 +342,9 @@
 				2F444D6B29FF8FCB00FBF0A3 /* Color+Ext.swift in Sources */,
 				2FE04C8C29F5C10400445B8A /* Test.swift in Sources */,
 				2FCA530329F0D0E000D619AD /* OpenAIEmbeddingResponse.swift in Sources */,
+				2F3182052AA686D500BD6DA5 /* TalosView.swift in Sources */,
+				2F3182032AA6860600BD6DA5 /* TalosViewModel.swift in Sources */,
+				2FFB574F2AA69722000F0889 /* RoundedRectangleButton.swift in Sources */,
 				2FCA531229F2056400D619AD /* TaskManager.swift in Sources */,
 				2FCA530D29F1E84A00D619AD /* PineconeUpsertResponse.swift in Sources */,
 				2FFC91BA2A00E8B100D75F71 /* GoogleTTSManager.swift in Sources */,
@@ -395,7 +419,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -449,7 +473,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -461,6 +485,7 @@
 		};
 		2FCA52FA29F0B15C00D619AD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2F3181FF2AA6807200BD6DA5 /* Debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -531,7 +556,7 @@
 				2FCA52F829F0B15C00D619AD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		2FCA52F929F0B15C00D619AD /* Build configuration list for PBXNativeTarget "talos" */ = {
 			isa = XCConfigurationList;
@@ -540,7 +565,7 @@
 				2FCA52FB29F0B15C00D619AD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};

@@ -8,7 +8,7 @@
 import Foundation
 
 
-class OpenAIClient {
+final class OpenAIClient {
     
     static let shared = OpenAIClient()
     
@@ -34,7 +34,6 @@ class OpenAIClient {
     
     
     func generateEmbeddings(for input: String) async throws -> Embedding {
-        
         var embeddingsRequest = createDefaultEmbeddingsRequest()
         
         // Configure json body

@@ -9,7 +9,6 @@ import SwiftUI
 import AVFAudio
 
 struct AudioTestView: View {
-    
     @StateObject private var speechRecognizer = SpeechRecognizer()
     
     @State private var hasAccess = false

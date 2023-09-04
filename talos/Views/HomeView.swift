@@ -93,15 +93,13 @@ struct HomeView: View {
                 }
             }
             .onAppear {
-                requestAllPermissions()
+//                requestPermissions()
             }
-
         }
     }
     
     private func speak() {
 //        speechRecognizer.writeToFile()
-        
     }
     
     private func onTapped() async {
@@ -110,8 +108,8 @@ struct HomeView: View {
             withAnimation(.easeInOut(duration: 0.5)) {
                 animate = true
             }
-
             speechRecognizer.startRecording()
+            
         } else {
             isRecording = false
 

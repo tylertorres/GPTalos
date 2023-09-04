@@ -13,7 +13,6 @@ class Transcriber {
     private let openAIClient : OpenAIClient = OpenAIClient.shared
     
     func transcribe() async -> String {
-        
         do {
             if (whisperIsEnabled) {
                 return try await transcribeUsingOAI()
