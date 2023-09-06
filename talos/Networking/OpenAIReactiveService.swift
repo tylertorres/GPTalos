@@ -9,27 +9,18 @@ import Foundation
 import Combine
 
 enum OpenAIError : Error {
+    case contentError
     case invalidUrl
     case invalidAudioFile
-    case contentError
+    case invalidState
     case other(Error)
 }
-
-// Another potential way of getting an env var
-enum Environment {
-    static var myEnvVar: String? {
-        return ProcessInfo.processInfo.environment["MY_ENV_VAR"]
-    }
-}
-
-
 
 class OpenAIReactiveService {
     
     private let baseUrl = "https://api.openai.com/v1"
     private let chatCompletionsEndpoint = "/chat/completions"
     private let whisperEndpoint = "/audio/transcriptions"
-    
     
     func fetchTranscription() -> AnyPublisher<String, OpenAIError> {
         

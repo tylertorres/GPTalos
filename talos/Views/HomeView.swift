@@ -32,11 +32,7 @@ struct HomeView: View {
                         
                         VStack {
                             
-                            Text(speechRecognizer.transcript)
-                                .font(.title)
-                                .foregroundColor(.white)
-                                .padding(.top, 50)
-                            
+
                             Button(
                                 action: {
 //                                    speak()
@@ -114,35 +110,13 @@ struct HomeView: View {
             isRecording = false
 
             speechRecognizer.stopRecording()
-            await speechRecognizer.transcribeAudioFile()
+//            await speechRecognizer.transcribeAudioFile()
 
             withAnimation(.easeInOut(duration: 0.5)) {
                 animate = false
             }
         }
     }
-    
-    private func requestAllPermissions() {
-        requestMicrophoneAccess()
-        requestSpeechAccess()
-    }
-    
-    private func requestSpeechAccess() {
-        print("In request speech access")
-        speechRecognizer.requestSpeech()
-    }
-    
-    private func requestMicrophoneAccess() {
-        print("In request microphone access")
-        speechRecognizer.requestMicrophone { granted in
-            guard granted else {
-                print("Mic access denied")
-                return
-            }
-            hasAccess = granted
-        }
-    }
-    
 }
 
 struct HomeView_Previews: PreviewProvider {

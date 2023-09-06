@@ -9,24 +9,55 @@ import Foundation
 import Combine
 
 
+
+enum TalosState {
+    case idle
+    case recording
+}
+
 class TalosViewModel : ObservableObject {
     
-    private var cancellables: Set<AnyCancellable> = []
-    private let networkService: OpenAIReactiveService = OpenAIReactiveService()
+    @Published var modelText: String = ""
+    @Published var currentState: TalosState = .idle
     
-    @Published var modelText: String?
-    @Published var networkError: Error?
+    private var cancellables = Set<AnyCancellable>()
+    private let networkService: OpenAIReactiveService
+    private let speechService: SpeechRecognizer
+    
+    init(networkService: OpenAIReactiveService = OpenAIReactiveService(),
+         speechService: SpeechRecognizer = SpeechRecognizer()) {
+        self.networkService = networkService
+        self.speechService = speechService
+        
+        setupSpeechRecognitionBinding()
+    }
+    
+    func handleTapRecord() {
+        speechService.toggleRecording()
+    }
+    
+    private func setupSpeechRecognitionBinding() {
+        
+    }
+    
+    func requestPermissions() {
+        speechService.requestMicrophone { _ in }
+        speechService.requestSpeech()
+    }
     
     func fetchModelText() {
-        
         networkService.fetchTranscription()
-            .flatMap { [weak self] transcribedText in
-                self?.networkService.fetchChatCompletion(input: transcribedText) ?? Empty<String, OpenAIError>().eraseToAnyPublisher()
+            .flatMap { [weak self] transcribedText -> AnyPublisher<String, OpenAIError> in
+                guard let self else {
+                    return Fail(error: OpenAIError.invalidState).eraseToAnyPublisher()
+                }
+                return self.networkService.fetchChatCompletion(input: transcribedText)
             }
             .sink(receiveCompletion: { [weak self] completion in
                 switch completion {
                 case .failure(let error):
-                    self?.networkError = error
+//                    self?.networkError = error
+                    print(error)
                 case .finished:
                     break
                 }
@@ -34,5 +65,26 @@ class TalosViewModel : ObservableObject {
                 self?.modelText = text
             })
             .store(in: &cancellables)
+        
+        FileUtils.deleteAudioFile()
     }
+    
+//    // TODO: Put into its own service
+//    private func speakUsingGoogleTTS(with text: String) async {
+//        let googleManager = GoogleTTSManager.shared
+//
+//        let audioContent = await googleManager.callTTS(with: text)
+//
+//        guard !audioContent.isEmpty,
+//              let audioData = Data(base64Encoded: audioContent, options: .ignoreUnknownCharacters) else { return }
+//
+//        do {
+//            audioPlayer = try AVAudioPlayer(data: audioData)
+//            audioPlayer?.prepareToPlay()
+//            audioPlayer?.play()
+//        } catch {
+//            print("Error: \(error.localizedDescription)")
+//
+//        }
+//    }
 }
