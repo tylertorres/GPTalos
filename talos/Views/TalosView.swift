@@ -15,9 +15,12 @@ struct TalosView: View {
     var body: some View {
         
         VStack {
+            Text("TALOS is Listening")
+            
+            
             Spacer()
             RoundedRectangleButton(title: "Speak & Transcribe") {
-                print("Button Tapped")
+                
             }
             .frame(height: 70)
         }
@@ -29,3 +32,8 @@ struct TalosView_Previews: PreviewProvider {
         TalosView()
     }
 }
+
+
+
+// Listening Indicator
+//

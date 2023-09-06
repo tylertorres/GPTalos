@@ -9,9 +9,6 @@ import Foundation
 import AVFoundation
 import Speech
 
-// Class Transcriber
-/// Strictly in charge of transcribing an audio file at a given url
-
 
 class SpeechRecognizer : NSObject, ObservableObject {
     /// Different ways to get recording of audio
@@ -42,26 +39,7 @@ class SpeechRecognizer : NSObject, ObservableObject {
         return tempDir.appendingPathComponent(filePath)
     }
     
-    
-    func setupRecorder() {
         
-        let recordSettings : [String : Any] = [
-            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-            AVSampleRateKey: 44100.0,
-            AVNumberOfChannelsKey: 1,
-            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
-        ]
-        
-        do {
-            audioRecorder = try AVAudioRecorder(url: urlForRecording, settings: recordSettings)
-            //            audioRecorder?.delegate = self
-            
-            print("Recorder setup")
-        } catch {
-            print("Error setting up recorder with error : \(error.localizedDescription)")
-        }
-    }
-    
     func startRecording() {
         if audioRecorder == nil {
             print("\nCreating recorder...")
@@ -77,6 +55,26 @@ class SpeechRecognizer : NSObject, ObservableObject {
         audioRecorder?.stop()
         status = .stopped
     }
+    
+    func setupRecorder() {
+        
+        let recorderSettings : [String : Any] = [
+            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+            AVSampleRateKey: 44100.0,
+            AVNumberOfChannelsKey: 1,
+            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+        ]
+        
+        do {
+            audioRecorder = try AVAudioRecorder(url: urlForRecording, settings: recorderSettings)
+            //            audioRecorder?.delegate = self
+            
+            print("Recorder setup")
+        } catch {
+            print("Error setting up recorder with error : \(error.localizedDescription)")
+        }
+    }
+
     
     
     //---- Speech Recognition Methods ----\\

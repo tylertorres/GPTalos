@@ -120,7 +120,6 @@ final class OpenAIClient {
     
     private func createMultiPartRequest(audioData: Data, model: String) -> URLRequest {
         let boundary = UUID().uuidString
-        
         let mimeType = "audio/mp4"
         let filename = "audioTwo.m4a"
         let language = "en"
