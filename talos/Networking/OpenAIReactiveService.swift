@@ -22,6 +22,8 @@ class OpenAIReactiveService {
     private let chatCompletionsEndpoint = "/chat/completions"
     private let whisperEndpoint = "/audio/transcriptions"
     
+    private let apiKey: String = try! Config.getValue(for: Constants.API_KEY)
+    
     func fetchTranscription() -> AnyPublisher<String, OpenAIError> {
         
         guard let audioData = convertAudioFileToData() else {
@@ -76,11 +78,6 @@ class OpenAIReactiveService {
         let url = URL(string: baseUrl + whisperEndpoint)!
         var request = URLRequest(url: url)
         
-        // TODO: Maybe come back to this and move to a more suitable place
-        guard let apiKey = Bundle.main.infoDictionary?["API_KEY"] as? String else {
-            fatalError("Must have an api key to use OpenAI API")
-        }
-        
         request.httpMethod = "POST"
         request.allHTTPHeaderFields = [
             "Authorization": "Bearer \(apiKey)",
@@ -129,10 +126,6 @@ class OpenAIReactiveService {
     }
     
     private func createChatCompletionRequest(input: String) -> URLRequest {
-        
-        guard let apiKey = Bundle.main.infoDictionary?["API_KEY"] as? String else {
-            fatalError("Must have an api key to use OpenAI API")
-        }
         
         let url = URL(string: baseUrl + chatCompletionsEndpoint)!
         var request = URLRequest(url: url)

@@ -24,12 +24,11 @@ class AppDelegate : NSObject, UIApplicationDelegate {
 
 @main
 struct talosApp: App {
-    
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            TalosView()
                 .environment(\.colorScheme, .light)
         }
     }

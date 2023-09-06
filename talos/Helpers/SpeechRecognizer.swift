@@ -12,8 +12,8 @@ import Speech
 class SpeechRecognizer: NSObject, ObservableObject {
     
     @Published var status: AudioStatus = .stopped
-    
     var audioRecorder: AVAudioRecorder?
+    
     var audioPlayer: AVAudioPlayer?
     
     var urlForRecording: URL {
@@ -34,16 +34,22 @@ class SpeechRecognizer: NSObject, ObservableObject {
         }
     }
     
-    func startRecording() {
+    private func startRecording() {
+        print("Started Recording...")
         audioRecorder?.record()
         status = .recording
     }
     
-    func stopRecording() {
+    private func stopRecording() {
+        print("Stopped Recording...")
         audioRecorder?.stop()
         status = .stopped
     }
     
+    func requestPermissions() {
+        SFSpeechRecognizer.requestAuthorization { _ in }
+        AVAudioSession.sharedInstance().requestRecordPermission { _ in }
+    }
     
     private func setupRecorder() {
         let recorderSettings : [String : Any] = [
@@ -55,37 +61,11 @@ class SpeechRecognizer: NSObject, ObservableObject {
         
         do {
             audioRecorder = try AVAudioRecorder(url: urlForRecording, settings: recorderSettings)
-            print("Recorder setup")
+            audioRecorder?.delegate = self
         } catch {
-            print("Error setting up recorder with error : \(error.localizedDescription)")
+            print("Failed to setup recorder : \(error.localizedDescription)")
         }
     }
-    
-    private func speakUsingGoogleTTS(with text: String) async {
-        let googleManager = GoogleTTSManager.shared
-        
-        let audioContent = await googleManager.callTTS(with: text)
-        
-        guard !audioContent.isEmpty,
-              let audioData = Data(base64Encoded: audioContent, options: .ignoreUnknownCharacters) else { return }
-        
-        do {
-            audioPlayer = try AVAudioPlayer(data: audioData)
-            audioPlayer?.prepareToPlay()
-            audioPlayer?.play()
-        } catch {
-            print("Error: \(error.localizedDescription)")
-        }
-    }
-    
-    func requestSpeech() {
-        SFSpeechRecognizer.requestAuthorization { _ in }
-    }
-    
-    func requestMicrophone(completion: @escaping (Bool) -> Void) {
-        AVAudioSession.sharedInstance().requestRecordPermission(completion)
-    }
-    
 }
 
 extension SpeechRecognizer : AVAudioRecorderDelegate {}

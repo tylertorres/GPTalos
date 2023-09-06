@@ -7,29 +7,31 @@
 
 import SwiftUI
 
-@available(iOS 16.1, *)
 struct TalosView: View {
     
     @StateObject private var viewModel = TalosViewModel()
+    @State private var color : Color = Color(hex: "#FFFFFF")
+
     
     var body: some View {
-        
-        VStack {
-            Text(viewModel.modelText)
+        ZStack {
+            
+            color
+            
+            VStack {
+                Text(viewModel.modelText)
+                    .padding()
+                Spacer()
+                RoundedRectangleButton(title: "Speak & Transcribe") {
+                    viewModel.handleTapRecord()
+                }
+                .frame(height: 60)
                 .padding()
-            Spacer()
-            RoundedRectangleButton(title: "Speak & Transcribe") {
-                onTapped()
             }
-            .frame(height: 60)
+            .onAppear {
+                viewModel.requestPermissions()
+            }
         }
-        .onAppear {
-            viewModel.requestPermissions()
-        }
-    }
-    
-    private func onTapped() {
-        viewModel.handleTapRecord()
     }
 }
 

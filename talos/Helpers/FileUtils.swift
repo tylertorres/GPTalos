@@ -11,8 +11,6 @@ import Foundation
 
 struct FileUtils {
     
-
-    
     static func getTemporaryDirectory() -> URL {
         let fileManager = FileManager.default
         let tempDirectoryUrl = fileManager.temporaryDirectory

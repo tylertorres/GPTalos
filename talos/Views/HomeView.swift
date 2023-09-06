@@ -104,12 +104,12 @@ struct HomeView: View {
             withAnimation(.easeInOut(duration: 0.5)) {
                 animate = true
             }
-            speechRecognizer.startRecording()
+//            speechRecognizer.startRecording()
             
         } else {
             isRecording = false
 
-            speechRecognizer.stopRecording()
+//            speechRecognizer.stopRecording()
 //            await speechRecognizer.transcribeAudioFile()
 
             withAnimation(.easeInOut(duration: 0.5)) {

@@ -9,7 +9,6 @@ import Foundation
 import Combine
 
 
-
 enum TalosState {
     case idle
     case recording
@@ -36,16 +35,20 @@ class TalosViewModel : ObservableObject {
         speechService.toggleRecording()
     }
     
-    private func setupSpeechRecognitionBinding() {
-        
-    }
-    
     func requestPermissions() {
-        speechService.requestMicrophone { _ in }
-        speechService.requestSpeech()
+        speechService.requestPermissions()
     }
     
-    func fetchModelText() {
+    private func setupSpeechRecognitionBinding() {
+        speechService.$status
+            .filter { $0 == .stopped }
+            .sink { [weak self] _ in
+                self?.fetchModelText()
+            }
+            .store(in: &cancellables)
+    }
+    
+    private func fetchModelText() {
         networkService.fetchTranscription()
             .flatMap { [weak self] transcribedText -> AnyPublisher<String, OpenAIError> in
                 guard let self else {
@@ -53,10 +56,10 @@ class TalosViewModel : ObservableObject {
                 }
                 return self.networkService.fetchChatCompletion(input: transcribedText)
             }
-            .sink(receiveCompletion: { [weak self] completion in
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { completion in
                 switch completion {
                 case .failure(let error):
-//                    self?.networkError = error
                     print(error)
                 case .finished:
                     break
@@ -66,7 +69,7 @@ class TalosViewModel : ObservableObject {
             })
             .store(in: &cancellables)
         
-        FileUtils.deleteAudioFile()
+//        FileUtils.deleteAudioFile()
     }
     
 //    // TODO: Put into its own service
