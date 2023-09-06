@@ -40,8 +40,11 @@ class TalosViewModel : ObservableObject {
     }
     
     private func setupSpeechRecognitionBinding() {
+        
         speechService.$status
-            .filter { $0 == .stopped }
+            .filter { [weak self] status in
+                return status == .stopped && self?.speechService.isAudioDataAvailable() == true
+            }
             .sink { [weak self] _ in
                 self?.fetchModelText()
             }
@@ -49,6 +52,7 @@ class TalosViewModel : ObservableObject {
     }
     
     private func fetchModelText() {
+        
         networkService.fetchTranscription()
             .flatMap { [weak self] transcribedText -> AnyPublisher<String, OpenAIError> in
                 guard let self else {
@@ -66,10 +70,9 @@ class TalosViewModel : ObservableObject {
                 }
             }, receiveValue: { [weak self] text in
                 self?.modelText = text
+                FileUtils.deleteAudioFile()
             })
             .store(in: &cancellables)
-        
-//        FileUtils.deleteAudioFile()
     }
     
 //    // TODO: Put into its own service

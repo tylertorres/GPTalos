@@ -34,6 +34,15 @@ class SpeechRecognizer: NSObject, ObservableObject {
         }
     }
     
+    func requestPermissions() {
+        SFSpeechRecognizer.requestAuthorization { _ in }
+        AVAudioSession.sharedInstance().requestRecordPermission { _ in }
+    }
+    
+    func isAudioDataAvailable() -> Bool {
+        return FileManager.default.fileExists(atPath: urlForRecording.path())
+    }
+    
     private func startRecording() {
         print("Started Recording...")
         audioRecorder?.record()
@@ -44,11 +53,6 @@ class SpeechRecognizer: NSObject, ObservableObject {
         print("Stopped Recording...")
         audioRecorder?.stop()
         status = .stopped
-    }
-    
-    func requestPermissions() {
-        SFSpeechRecognizer.requestAuthorization { _ in }
-        AVAudioSession.sharedInstance().requestRecordPermission { _ in }
     }
     
     private func setupRecorder() {

@@ -36,6 +36,7 @@ class OpenAIReactiveService {
             .mapError { OpenAIError.other($0) }
             .tryMap { data, _ in
                 let whisperResponse = try JSONDecoder().decode(OpenAIWhisperReponse.self, from: data)
+                print("\nWhisper Response: \(whisperResponse.text)")
                 return whisperResponse.text
             }
             .mapError { $0 as? OpenAIError ?? OpenAIError.other($0) }
@@ -54,6 +55,8 @@ class OpenAIReactiveService {
                 guard let result = completionResponse.choices.first?.message.content else {
                     throw OpenAIError.contentError
                 }
+                
+                print("\nCompletion Response: \(result)")
                 
                 return result
             }
