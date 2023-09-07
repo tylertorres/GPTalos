@@ -12,9 +12,8 @@ import Speech
 class SpeechRecognizer: NSObject, ObservableObject {
     
     @Published var status: AudioStatus = .stopped
-    var audioRecorder: AVAudioRecorder?
     
-    var audioPlayer: AVAudioPlayer?
+    var audioRecorder: AVAudioRecorder?
     
     var urlForRecording: URL {
         return FileUtils.getTemporaryDirectory().appendingPathComponent(Constants.AUDIO_FILENAME)

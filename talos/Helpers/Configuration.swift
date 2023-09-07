@@ -16,7 +16,9 @@ enum Config {
     
     static func getValue(for key: String) throws -> String {
         guard let infoDictionary = Bundle.main.infoDictionary,
-              let value = infoDictionary[key] as? String else { throw ConfigError.missingKey }
+              let value = infoDictionary[key] as? String else {
+            throw ConfigError.missingKey
+        }
         
         return value
     }

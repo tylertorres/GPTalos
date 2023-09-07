@@ -11,5 +11,6 @@ class Constants {
     
     static let AUDIO_FILENAME = "audio.m4a"
     static let API_KEY = "API_KEY"
+    static let GOOGLE_API_KEY = "GOOGLE_TTS_API_KEY"
     
 }

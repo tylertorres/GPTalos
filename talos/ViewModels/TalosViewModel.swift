@@ -22,11 +22,14 @@ class TalosViewModel : ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     private let networkService: OpenAIReactiveService
     private let speechService: SpeechRecognizer
+    private let ttsService: GoogleTTSManager
     
     init(networkService: OpenAIReactiveService = OpenAIReactiveService(),
-         speechService: SpeechRecognizer = SpeechRecognizer()) {
+         speechService: SpeechRecognizer = SpeechRecognizer(),
+         ttsService: GoogleTTSManager = GoogleTTSManager()) {
         self.networkService = networkService
         self.speechService = speechService
+        self.ttsService = ttsService
         
         setupSpeechRecognitionBinding()
     }
@@ -62,35 +65,30 @@ class TalosViewModel : ObservableObject {
             }
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
-                switch completion {
-                case .failure(let error):
-                    print(error)
-                case .finished:
-                    break
-                }
+                self.handleCompletion(completion)
             }, receiveValue: { [weak self] text in
-                self?.modelText = text
-                FileUtils.deleteAudioFile()
+                self?.handleFetchedModelText(text)
             })
             .store(in: &cancellables)
     }
     
-//    // TODO: Put into its own service
-//    private func speakUsingGoogleTTS(with text: String) async {
-//        let googleManager = GoogleTTSManager.shared
-//
-//        let audioContent = await googleManager.callTTS(with: text)
-//
-//        guard !audioContent.isEmpty,
-//              let audioData = Data(base64Encoded: audioContent, options: .ignoreUnknownCharacters) else { return }
-//
-//        do {
-//            audioPlayer = try AVAudioPlayer(data: audioData)
-//            audioPlayer?.prepareToPlay()
-//            audioPlayer?.play()
-//        } catch {
-//            print("Error: \(error.localizedDescription)")
-//
-//        }
-//    }
+    private func handleCompletion(_ completion: Subscribers.Completion<OpenAIError>) {
+        switch completion {
+        case .failure(let error):
+            // TODO: Handle this error in UI
+            print(error)
+        case .finished:
+            break
+        }
+    }
+    
+    private func handleFetchedModelText(_ text: String) {
+        self.modelText = text
+        speakModelText(text)
+        FileUtils.deleteAudioFile()
+    }
+    
+    private func speakModelText(_ text: String) {
+        ttsService.speakText(text)
+    }
 }
