@@ -10,8 +10,15 @@
 		2F3182002AA6807200BD6DA5 /* Debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 2F3181FF2AA6807200BD6DA5 /* Debug.xcconfig */; };
 		2F3182032AA6860600BD6DA5 /* TalosViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3182022AA6860600BD6DA5 /* TalosViewModel.swift */; };
 		2F3182052AA686D500BD6DA5 /* TalosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3182042AA686D500BD6DA5 /* TalosView.swift */; };
+		2F35AEFD2AA9068F002A4A2F /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F35AEFC2AA9068F002A4A2F /* Configuration.swift */; };
 		2F444D6929FF7E0800FBF0A3 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F444D6829FF7E0800FBF0A3 /* HomeView.swift */; };
 		2F444D6B29FF8FCB00FBF0A3 /* Color+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F444D6A29FF8FCB00FBF0A3 /* Color+Ext.swift */; };
+		2F7438082AB287C7003A43E6 /* DocumentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7438072AB287C7003A43E6 /* DocumentsView.swift */; };
+		2F74380A2AB2C32F003A43E6 /* PDFKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7438092AB2C32F003A43E6 /* PDFKitView.swift */; };
+		2F74380E2AB37CCD003A43E6 /* cash_app_take_home_project.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 2F74380D2AB37CCD003A43E6 /* cash_app_take_home_project.pdf */; };
+		2F7438102AB396AD003A43E6 /* DocumentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F74380F2AB396AD003A43E6 /* DocumentsViewModel.swift */; };
+		2F7438122AB399BE003A43E6 /* tylertorres_resume_20230901.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 2F7438112AB399BE003A43E6 /* tylertorres_resume_20230901.pdf */; };
+		2F7438142AB3A1FC003A43E6 /* PDFThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7438132AB3A1FC003A43E6 /* PDFThumbnailView.swift */; };
 		2F7EB35F29F5F26700AE3A20 /* AudioStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7EB35E29F5F26700AE3A20 /* AudioStatus.swift */; };
 		2FCA52EF29F0B15B00D619AD /* talosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCA52EE29F0B15B00D619AD /* talosApp.swift */; };
 		2FCA52F129F0B15B00D619AD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCA52F029F0B15B00D619AD /* ContentView.swift */; };
@@ -31,12 +38,13 @@
 		2FE04C8A29F4B40300445B8A /* Download.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE04C8929F4B40300445B8A /* Download.swift */; };
 		2FE04C8C29F5C10400445B8A /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE04C8B29F5C10400445B8A /* Test.swift */; };
 		2FE04C8E29F5C7D300445B8A /* SpeechRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE04C8D29F5C7D300445B8A /* SpeechRecognizer.swift */; };
-		2FE04C9229F5D13F00445B8A /* AudioTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE04C9129F5D13F00445B8A /* AudioTestView.swift */; };
 		2FE2EF5129FC907E00E4D34E /* OpenAIWhisperResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE2EF5029FC907E00E4D34E /* OpenAIWhisperResponse.swift */; };
 		2FE2EF5329FDADBF00E4D34E /* FileUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE2EF5229FDADBF00E4D34E /* FileUtils.swift */; };
 		2FE2EF5529FE096000E4D34E /* Transcriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE2EF5429FE096000E4D34E /* Transcriber.swift */; };
 		2FE2EF5829FF3BEF00E4D34E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE2EF5729FF3BEF00E4D34E /* Constants.swift */; };
 		2FFB574F2AA69722000F0889 /* RoundedRectangleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFB574E2AA69722000F0889 /* RoundedRectangleButton.swift */; };
+		2FFB57512AA6A28D000F0889 /* ListeningIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFB57502AA6A28D000F0889 /* ListeningIndicator.swift */; };
+		2FFB57562AA7D653000F0889 /* OpenAIReactiveService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFB57552AA7D653000F0889 /* OpenAIReactiveService.swift */; };
 		2FFC91BA2A00E8B100D75F71 /* GoogleTTSManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFC91B92A00E8B100D75F71 /* GoogleTTSManager.swift */; };
 		2FFC91BD2A016D1500D75F71 /* GoogleSynthesizeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FFC91BC2A016D1500D75F71 /* GoogleSynthesizeResponse.swift */; };
 /* End PBXBuildFile section */
@@ -45,8 +53,16 @@
 		2F3181FF2AA6807200BD6DA5 /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = config/Debug.xcconfig; sourceTree = "<group>"; };
 		2F3182022AA6860600BD6DA5 /* TalosViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalosViewModel.swift; sourceTree = "<group>"; };
 		2F3182042AA686D500BD6DA5 /* TalosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalosView.swift; sourceTree = "<group>"; };
+		2F35AEFB2AA9061E002A4A2F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		2F35AEFC2AA9068F002A4A2F /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		2F444D6829FF7E0800FBF0A3 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		2F444D6A29FF8FCB00FBF0A3 /* Color+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Ext.swift"; sourceTree = "<group>"; };
+		2F7438072AB287C7003A43E6 /* DocumentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentsView.swift; sourceTree = "<group>"; };
+		2F7438092AB2C32F003A43E6 /* PDFKitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFKitView.swift; sourceTree = "<group>"; };
+		2F74380D2AB37CCD003A43E6 /* cash_app_take_home_project.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = cash_app_take_home_project.pdf; sourceTree = "<group>"; };
+		2F74380F2AB396AD003A43E6 /* DocumentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentsViewModel.swift; sourceTree = "<group>"; };
+		2F7438112AB399BE003A43E6 /* tylertorres_resume_20230901.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = tylertorres_resume_20230901.pdf; sourceTree = "<group>"; };
+		2F7438132AB3A1FC003A43E6 /* PDFThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFThumbnailView.swift; sourceTree = "<group>"; };
 		2F7EB35E29F5F26700AE3A20 /* AudioStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioStatus.swift; sourceTree = "<group>"; };
 		2FCA52EB29F0B15B00D619AD /* talos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = talos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FCA52EE29F0B15B00D619AD /* talosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talosApp.swift; sourceTree = "<group>"; };
@@ -67,12 +83,13 @@
 		2FE04C8929F4B40300445B8A /* Download.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Download.swift; sourceTree = "<group>"; };
 		2FE04C8B29F5C10400445B8A /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 		2FE04C8D29F5C7D300445B8A /* SpeechRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognizer.swift; sourceTree = "<group>"; };
-		2FE04C9129F5D13F00445B8A /* AudioTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioTestView.swift; sourceTree = "<group>"; };
 		2FE2EF5029FC907E00E4D34E /* OpenAIWhisperResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIWhisperResponse.swift; sourceTree = "<group>"; };
 		2FE2EF5229FDADBF00E4D34E /* FileUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUtils.swift; sourceTree = "<group>"; };
 		2FE2EF5429FE096000E4D34E /* Transcriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transcriber.swift; sourceTree = "<group>"; };
 		2FE2EF5729FF3BEF00E4D34E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2FFB574E2AA69722000F0889 /* RoundedRectangleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedRectangleButton.swift; sourceTree = "<group>"; };
+		2FFB57502AA6A28D000F0889 /* ListeningIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListeningIndicator.swift; sourceTree = "<group>"; };
+		2FFB57552AA7D653000F0889 /* OpenAIReactiveService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenAIReactiveService.swift; sourceTree = "<group>"; };
 		2FFC91B92A00E8B100D75F71 /* GoogleTTSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleTTSManager.swift; sourceTree = "<group>"; };
 		2FFC91BC2A016D1500D75F71 /* GoogleSynthesizeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSynthesizeResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -96,6 +113,26 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		2F7438062AB287B9003A43E6 /* Documents */ = {
+			isa = PBXGroup;
+			children = (
+				2F7438072AB287C7003A43E6 /* DocumentsView.swift */,
+				2F7438092AB2C32F003A43E6 /* PDFKitView.swift */,
+				2F74380F2AB396AD003A43E6 /* DocumentsViewModel.swift */,
+				2F7438132AB3A1FC003A43E6 /* PDFThumbnailView.swift */,
+			);
+			path = Documents;
+			sourceTree = "<group>";
+		};
+		2F74380C2AB37C9D003A43E6 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2F7438112AB399BE003A43E6 /* tylertorres_resume_20230901.pdf */,
+				2F74380D2AB37CCD003A43E6 /* cash_app_take_home_project.pdf */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		2FCA52E229F0B15A00D619AD = {
 			isa = PBXGroup;
 			children = (
@@ -115,6 +152,10 @@
 		2FCA52ED29F0B15B00D619AD /* talos */ = {
 			isa = PBXGroup;
 			children = (
+				2F74380C2AB37C9D003A43E6 /* Resources */,
+				2F7438062AB287B9003A43E6 /* Documents */,
+				2F35AEFB2AA9061E002A4A2F /* Info.plist */,
+				2FFB57522AA7D341000F0889 /* Networking */,
 				2F3182012AA685F000BD6DA5 /* ViewModels */,
 				2FFC91B82A00E89E00D75F71 /* Google */,
 				2FE2EF5629FF3BE000E4D34E /* Constants */,
@@ -215,6 +256,7 @@
 				2F7EB35E29F5F26700AE3A20 /* AudioStatus.swift */,
 				2FE2EF5229FDADBF00E4D34E /* FileUtils.swift */,
 				2FE2EF5429FE096000E4D34E /* Transcriber.swift */,
+				2F35AEFC2AA9068F002A4A2F /* Configuration.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -222,10 +264,10 @@
 		2FE04C8F29F5D0F900445B8A /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				2FE04C9129F5D13F00445B8A /* AudioTestView.swift */,
 				2F444D6829FF7E0800FBF0A3 /* HomeView.swift */,
 				2F3182042AA686D500BD6DA5 /* TalosView.swift */,
 				2FFB574E2AA69722000F0889 /* RoundedRectangleButton.swift */,
+				2FFB57502AA6A28D000F0889 /* ListeningIndicator.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -244,6 +286,14 @@
 				2FE2EF5729FF3BEF00E4D34E /* Constants.swift */,
 			);
 			path = Constants;
+			sourceTree = "<group>";
+		};
+		2FFB57522AA7D341000F0889 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				2FFB57552AA7D653000F0889 /* OpenAIReactiveService.swift */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 		2FFC91B82A00E89E00D75F71 /* Google */ = {
@@ -324,6 +374,8 @@
 				2FCA52F629F0B15C00D619AD /* Preview Assets.xcassets in Resources */,
 				2FCA52F329F0B15C00D619AD /* Assets.xcassets in Resources */,
 				2F3182002AA6807200BD6DA5 /* Debug.xcconfig in Resources */,
+				2F7438122AB399BE003A43E6 /* tylertorres_resume_20230901.pdf in Resources */,
+				2F74380E2AB37CCD003A43E6 /* cash_app_take_home_project.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,15 +390,18 @@
 				2FE2EF5829FF3BEF00E4D34E /* Constants.swift in Sources */,
 				2FE04C8729F39C0D00445B8A /* AnyCodable.swift in Sources */,
 				2F7EB35F29F5F26700AE3A20 /* AudioStatus.swift in Sources */,
-				2FE04C9229F5D13F00445B8A /* AudioTestView.swift in Sources */,
+				2FFB57512AA6A28D000F0889 /* ListeningIndicator.swift in Sources */,
 				2F444D6B29FF8FCB00FBF0A3 /* Color+Ext.swift in Sources */,
+				2F35AEFD2AA9068F002A4A2F /* Configuration.swift in Sources */,
 				2FE04C8C29F5C10400445B8A /* Test.swift in Sources */,
 				2FCA530329F0D0E000D619AD /* OpenAIEmbeddingResponse.swift in Sources */,
+				2F74380A2AB2C32F003A43E6 /* PDFKitView.swift in Sources */,
 				2F3182052AA686D500BD6DA5 /* TalosView.swift in Sources */,
 				2F3182032AA6860600BD6DA5 /* TalosViewModel.swift in Sources */,
 				2FFB574F2AA69722000F0889 /* RoundedRectangleButton.swift in Sources */,
 				2FCA531229F2056400D619AD /* TaskManager.swift in Sources */,
 				2FCA530D29F1E84A00D619AD /* PineconeUpsertResponse.swift in Sources */,
+				2F7438102AB396AD003A43E6 /* DocumentsViewModel.swift in Sources */,
 				2FFC91BA2A00E8B100D75F71 /* GoogleTTSManager.swift in Sources */,
 				2FE04C8A29F4B40300445B8A /* Download.swift in Sources */,
 				2FE04C7F29F2649200445B8A /* LLMTask.swift in Sources */,
@@ -360,7 +415,10 @@
 				2FCA52FE29F0B2F000D619AD /* OpenAIClient.swift in Sources */,
 				2FCA531029F1EED300D619AD /* Queue.swift in Sources */,
 				2FE2EF5129FC907E00E4D34E /* OpenAIWhisperResponse.swift in Sources */,
+				2F7438082AB287C7003A43E6 /* DocumentsView.swift in Sources */,
+				2FFB57562AA7D653000F0889 /* OpenAIReactiveService.swift in Sources */,
 				2FCA530729F0DD0800D619AD /* PineconeClient.swift in Sources */,
+				2F7438142AB3A1FC003A43E6 /* PDFThumbnailView.swift in Sources */,
 				2F444D6929FF7E0800FBF0A3 /* HomeView.swift in Sources */,
 				2FE2EF5529FE096000E4D34E /* Transcriber.swift in Sources */,
 			);
@@ -371,6 +429,7 @@
 /* Begin XCBuildConfiguration section */
 		2FCA52F729F0B15C00D619AD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2F3181FF2AA6807200BD6DA5 /* Debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -495,6 +554,7 @@
 				DEVELOPMENT_TEAM = G7956HFVVK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = talos/Info.plist;
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Usage for access to microphon";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Used for live transcription of input";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -526,6 +586,7 @@
 				DEVELOPMENT_TEAM = G7956HFVVK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = talos/Info.plist;
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Usage for access to microphon";
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "Used for live transcription of input";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
