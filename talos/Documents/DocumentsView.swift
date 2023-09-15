@@ -17,10 +17,7 @@ struct DocumentsView: View {
     @StateObject private var viewModel = DocumentsViewModel()
     
     var body: some View {
-        PDFThumbnailView(viewModel: viewModel)
-            .onAppear {
-                viewModel.loadPDFsFromBundle()
-            }
+        ThumbnailGrid(thumbnails: ThumbnailGenerator.generateThumbnailsFromBundle())
     }
 }
 

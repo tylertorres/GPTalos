@@ -11,11 +11,11 @@ import PDFKit
 struct PDFThumbnailInfo : Hashable {
     let document: PDFDocument
     let thumbnailImage: UIImage
+    let description: String = "This is a description of the current pdf"
 }
 
 class DocumentsViewModel : ObservableObject {
     
-    @Published var pdfsAvailable: PDFDocument?
     @Published var thumbnails: [PDFThumbnailInfo] = []
     
     func loadPDFsFromBundle() {

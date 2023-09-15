@@ -11,6 +11,7 @@
 		2F3182032AA6860600BD6DA5 /* TalosViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3182022AA6860600BD6DA5 /* TalosViewModel.swift */; };
 		2F3182052AA686D500BD6DA5 /* TalosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F3182042AA686D500BD6DA5 /* TalosView.swift */; };
 		2F35AEFD2AA9068F002A4A2F /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F35AEFC2AA9068F002A4A2F /* Configuration.swift */; };
+		2F36D6EB2AB3ED8400C16DDE /* ThumbnailGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F36D6EA2AB3ED8400C16DDE /* ThumbnailGenerator.swift */; };
 		2F444D6929FF7E0800FBF0A3 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F444D6829FF7E0800FBF0A3 /* HomeView.swift */; };
 		2F444D6B29FF8FCB00FBF0A3 /* Color+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F444D6A29FF8FCB00FBF0A3 /* Color+Ext.swift */; };
 		2F7438082AB287C7003A43E6 /* DocumentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7438072AB287C7003A43E6 /* DocumentsView.swift */; };
@@ -18,7 +19,10 @@
 		2F74380E2AB37CCD003A43E6 /* cash_app_take_home_project.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 2F74380D2AB37CCD003A43E6 /* cash_app_take_home_project.pdf */; };
 		2F7438102AB396AD003A43E6 /* DocumentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F74380F2AB396AD003A43E6 /* DocumentsViewModel.swift */; };
 		2F7438122AB399BE003A43E6 /* tylertorres_resume_20230901.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 2F7438112AB399BE003A43E6 /* tylertorres_resume_20230901.pdf */; };
-		2F7438142AB3A1FC003A43E6 /* PDFThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7438132AB3A1FC003A43E6 /* PDFThumbnailView.swift */; };
+		2F7438162AB3C0B2003A43E6 /* ThumbnailGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7438152AB3C0B2003A43E6 /* ThumbnailGrid.swift */; };
+		2F7438182AB3C293003A43E6 /* ThumbnailCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7438172AB3C293003A43E6 /* ThumbnailCard.swift */; };
+		2F74381A2AB3D52E003A43E6 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7438192AB3D52E003A43E6 /* SectionHeader.swift */; };
+		2F74381C2AB3DB94003A43E6 /* ViewConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F74381B2AB3DB94003A43E6 /* ViewConstants.swift */; };
 		2F7EB35F29F5F26700AE3A20 /* AudioStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F7EB35E29F5F26700AE3A20 /* AudioStatus.swift */; };
 		2FCA52EF29F0B15B00D619AD /* talosApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCA52EE29F0B15B00D619AD /* talosApp.swift */; };
 		2FCA52F129F0B15B00D619AD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCA52F029F0B15B00D619AD /* ContentView.swift */; };
@@ -55,6 +59,7 @@
 		2F3182042AA686D500BD6DA5 /* TalosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalosView.swift; sourceTree = "<group>"; };
 		2F35AEFB2AA9061E002A4A2F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		2F35AEFC2AA9068F002A4A2F /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		2F36D6EA2AB3ED8400C16DDE /* ThumbnailGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailGenerator.swift; sourceTree = "<group>"; };
 		2F444D6829FF7E0800FBF0A3 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		2F444D6A29FF8FCB00FBF0A3 /* Color+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Ext.swift"; sourceTree = "<group>"; };
 		2F7438072AB287C7003A43E6 /* DocumentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentsView.swift; sourceTree = "<group>"; };
@@ -62,7 +67,10 @@
 		2F74380D2AB37CCD003A43E6 /* cash_app_take_home_project.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = cash_app_take_home_project.pdf; sourceTree = "<group>"; };
 		2F74380F2AB396AD003A43E6 /* DocumentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentsViewModel.swift; sourceTree = "<group>"; };
 		2F7438112AB399BE003A43E6 /* tylertorres_resume_20230901.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = tylertorres_resume_20230901.pdf; sourceTree = "<group>"; };
-		2F7438132AB3A1FC003A43E6 /* PDFThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFThumbnailView.swift; sourceTree = "<group>"; };
+		2F7438152AB3C0B2003A43E6 /* ThumbnailGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailGrid.swift; sourceTree = "<group>"; };
+		2F7438172AB3C293003A43E6 /* ThumbnailCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailCard.swift; sourceTree = "<group>"; };
+		2F7438192AB3D52E003A43E6 /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
+		2F74381B2AB3DB94003A43E6 /* ViewConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewConstants.swift; sourceTree = "<group>"; };
 		2F7EB35E29F5F26700AE3A20 /* AudioStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioStatus.swift; sourceTree = "<group>"; };
 		2FCA52EB29F0B15B00D619AD /* talos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = talos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FCA52EE29F0B15B00D619AD /* talosApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = talosApp.swift; sourceTree = "<group>"; };
@@ -119,7 +127,11 @@
 				2F7438072AB287C7003A43E6 /* DocumentsView.swift */,
 				2F7438092AB2C32F003A43E6 /* PDFKitView.swift */,
 				2F74380F2AB396AD003A43E6 /* DocumentsViewModel.swift */,
-				2F7438132AB3A1FC003A43E6 /* PDFThumbnailView.swift */,
+				2F7438152AB3C0B2003A43E6 /* ThumbnailGrid.swift */,
+				2F7438172AB3C293003A43E6 /* ThumbnailCard.swift */,
+				2F7438192AB3D52E003A43E6 /* SectionHeader.swift */,
+				2F74381B2AB3DB94003A43E6 /* ViewConstants.swift */,
+				2F36D6EA2AB3ED8400C16DDE /* ThumbnailGenerator.swift */,
 			);
 			path = Documents;
 			sourceTree = "<group>";
@@ -386,12 +398,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F7438162AB3C0B2003A43E6 /* ThumbnailGrid.swift in Sources */,
 				2FCA52F129F0B15B00D619AD /* ContentView.swift in Sources */,
 				2FE2EF5829FF3BEF00E4D34E /* Constants.swift in Sources */,
 				2FE04C8729F39C0D00445B8A /* AnyCodable.swift in Sources */,
 				2F7EB35F29F5F26700AE3A20 /* AudioStatus.swift in Sources */,
 				2FFB57512AA6A28D000F0889 /* ListeningIndicator.swift in Sources */,
 				2F444D6B29FF8FCB00FBF0A3 /* Color+Ext.swift in Sources */,
+				2F7438182AB3C293003A43E6 /* ThumbnailCard.swift in Sources */,
 				2F35AEFD2AA9068F002A4A2F /* Configuration.swift in Sources */,
 				2FE04C8C29F5C10400445B8A /* Test.swift in Sources */,
 				2FCA530329F0D0E000D619AD /* OpenAIEmbeddingResponse.swift in Sources */,
@@ -404,12 +418,14 @@
 				2F7438102AB396AD003A43E6 /* DocumentsViewModel.swift in Sources */,
 				2FFC91BA2A00E8B100D75F71 /* GoogleTTSManager.swift in Sources */,
 				2FE04C8A29F4B40300445B8A /* Download.swift in Sources */,
+				2F74381C2AB3DB94003A43E6 /* ViewConstants.swift in Sources */,
 				2FE04C7F29F2649200445B8A /* LLMTask.swift in Sources */,
 				2FFC91BD2A016D1500D75F71 /* GoogleSynthesizeResponse.swift in Sources */,
 				2FCA530929F1DDE200D619AD /* PineconeQueryResponse.swift in Sources */,
 				2FE2EF5329FDADBF00E4D34E /* FileUtils.swift in Sources */,
 				2FE04C8229F274DC00445B8A /* OpenAIChatCompletionResponse.swift in Sources */,
 				2FCA530129F0B6B500D619AD /* Embedding.swift in Sources */,
+				2F74381A2AB3D52E003A43E6 /* SectionHeader.swift in Sources */,
 				2FCA52EF29F0B15B00D619AD /* talosApp.swift in Sources */,
 				2FE04C8E29F5C7D300445B8A /* SpeechRecognizer.swift in Sources */,
 				2FCA52FE29F0B2F000D619AD /* OpenAIClient.swift in Sources */,
@@ -418,9 +434,9 @@
 				2F7438082AB287C7003A43E6 /* DocumentsView.swift in Sources */,
 				2FFB57562AA7D653000F0889 /* OpenAIReactiveService.swift in Sources */,
 				2FCA530729F0DD0800D619AD /* PineconeClient.swift in Sources */,
-				2F7438142AB3A1FC003A43E6 /* PDFThumbnailView.swift in Sources */,
 				2F444D6929FF7E0800FBF0A3 /* HomeView.swift in Sources */,
 				2FE2EF5529FE096000E4D34E /* Transcriber.swift in Sources */,
+				2F36D6EB2AB3ED8400C16DDE /* ThumbnailGenerator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
